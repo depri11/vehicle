@@ -53,3 +53,13 @@ func (r *repository) Update(user *User) (*User, error) {
 
 	return user, nil
 }
+
+func (r *repository) Delete(ID int) error {
+	var user User
+	err := r.db.Where("id = ?", ID).Delete(&user).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/depri11/vehicle/src/helper"
 	"github.com/gorilla/mux"
 )
 
@@ -65,12 +66,12 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
-	param, err := strconv.Atoi(params)
+	id, err := strconv.Atoi(params)
 	if err != nil {
 		fmt.Println("error")
 	}
 
-	user, err := c.repository.GetUserID(param)
+	user, err := c.repository.GetUserID(id)
 	if err != nil {
 		fmt.Fprint(w, errors.New("User not found"))
 	}
@@ -84,4 +85,19 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(result)
 
+}
+
+func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["id"]
+	id, err := strconv.Atoi(params)
+	if err != nil {
+		fmt.Println("error")
+	}
+
+	err = c.repository.Delete(id)
+	if err != nil {
+		errors.New("failed delete user")
+	}
+
+	helper.RespondJSON(w, http.StatusOK, "Delete user successfully")
 }
