@@ -17,15 +17,15 @@ Content-Type: application/json
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/16
+GET http://localhost:3000/users/24222
 Content-Type: application/json
 
 ### UPDATE USER
-POST http://localhost:3000/users/15
+POST http://localhost:3000/users/24
 Content-Type: application/json
 
 {
-    "fullname": "Devri 2",
+    "fullname": "Devri 22",
     "email": "dv@gmail.com",
     "password": "123",
     "phone": "0822",
@@ -36,5 +36,5 @@ Content-Type: application/json
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/17
+DELETE http://localhost:3000/users/19
 Content-Type: application/json

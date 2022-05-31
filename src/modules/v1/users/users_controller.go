@@ -2,8 +2,8 @@ package users
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -20,19 +20,17 @@ func NewController(repository *repository) *controller {
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	data, err := c.repository.FindAll()
 	if err != nil {
 		fmt.Fprint(w, err.Error())
 	}
 
-	json.NewEncoder(w).Encode(data)
+	// json.NewEncoder(w).Encode(data)
+	helper.ResponseJSON(w, http.StatusOK, data)
+
 }
 
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var data User
 	json.NewDecoder(r.Body).Decode(&data)
 
@@ -41,12 +39,12 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err.Error())
 	}
 
-	json.NewEncoder(w).Encode(&result)
+	// json.NewEncoder(w).Encode(&result)
+	helper.ResponseJSON(w, http.StatusOK, result)
+
 }
 
 func (c *controller) GetUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
@@ -55,35 +53,38 @@ func (c *controller) GetUser(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetUserID(param)
 	if err != nil {
-		fmt.Fprint(w, errors.New("User not found"))
+		helper.ResponseError(w, http.StatusBadRequest, "User not found")
+		return
 	}
 
-	json.NewEncoder(w).Encode(&result)
-
+	// json.NewEncoder(w).Encode(&result)
+	helper.ResponseJSON(w, http.StatusOK, result)
 }
 
 func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	params := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		fmt.Println("error")
+		log.Fatal(err)
+		return
 	}
 
 	user, err := c.repository.GetUserID(id)
 	if err != nil {
-		fmt.Fprint(w, errors.New("User not found"))
+		helper.ResponseError(w, http.StatusBadRequest, "User not found")
+		return
 	}
 
 	json.NewDecoder(r.Body).Decode(&user)
 
 	result, err := c.repository.Update(user)
 	if err != nil {
-		fmt.Fprint(w, err.Error())
+		helper.ResponseError(w, http.StatusBadRequest, "Failed update data user")
+		return
 	}
 
-	json.NewEncoder(w).Encode(result)
+	// json.NewEncoder(w).Encode(result)
+	helper.ResponseJSON(w, http.StatusOK, result)
 
 }
 
@@ -91,13 +92,22 @@ func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		fmt.Println("error")
+		log.Fatal(err)
+		return
+	}
+
+	_, err = c.repository.GetUserID(id)
+	if err != nil {
+		helper.ResponseError(w, http.StatusBadRequest, "User not found")
+		return
 	}
 
 	err = c.repository.Delete(id)
 	if err != nil {
-		errors.New("failed delete user")
+		helper.ResponseError(w, http.StatusBadRequest, "Failed delete data user")
+		return
 	}
 
-	helper.RespondJSON(w, http.StatusOK, "Delete user successfully")
+	helper.ResponseJSON(w, http.StatusOK, "Success delete user")
+
 }
