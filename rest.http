@@ -1,0 +1,36 @@
+GET http://localhost:3000/users/
+Content-Type: application/json
+
+### CREATE USER
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+    "fullname": "Devri",
+    "email": "dv@gmail.com",
+    "password": "123",
+    "phone": "0822",
+    "gender": "Male",
+    "address": "Indonesia",
+    "nickname": "Devri",
+    "birthday": "03/01/2001"
+}
+
+### GET USER BY ID
+GET http://localhost:3000/users/15
+Content-Type: application/json
+
+### UPDATE USER
+POST http://localhost:3000/users/15
+Content-Type: application/json
+
+{
+    "fullname": "Devri 2",
+    "email": "dv@gmail.com",
+    "password": "123",
+    "phone": "0822",
+    "gender": "Male",
+    "address": "Indonesia",
+    "nickname": "Devri",
+    "birthday": "03/01/2001"
+}
