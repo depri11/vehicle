@@ -92,9 +92,9 @@ GET http://localhost:3000/history/
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/1
+GET http://localhost:3000/history/3
 Content-Type: application/json
 
 ### DELETE HISTORY ID
-DELETE http://localhost:3000/history/22
+DELETE http://localhost:3000/history/3
 Content-Type: application/json

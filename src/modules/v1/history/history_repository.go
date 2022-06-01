@@ -1,6 +1,8 @@
 package history
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type repository struct {
 	db *gorm.DB
@@ -10,20 +12,19 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll() (*[]Historys, error) {
-	var data []Historys
-
-	err := r.db.Find(&data).Error
+func (r *repository) FindAll() (*Historyss, error) {
+	var historys Historyss
+	err := r.db.Preload("Vehicle").Find(&historys).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &data, nil
+	return &historys, nil
 }
 
 func (r *repository) GetID(ID int) (*Historys, error) {
 	var historys Historys
-	err := r.db.First(&historys, ID).Error
+	err := r.db.Preload("Vehicle").First(&historys, ID).Error
 	if err != nil {
 		return nil, err
 	}

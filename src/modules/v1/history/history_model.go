@@ -14,3 +14,5 @@ type Historys struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type Historyss []Historys
