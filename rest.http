@@ -86,3 +86,15 @@ Content-Type: application/json
 ### DELETE VEHICLE
 DELETE http://localhost:3000/vehicle/966
 Content-Type: application/json
+
+################################ HISTORY ################################
+GET http://localhost:3000/history/
+Content-Type: application/json
+
+### GET HISTORY ID
+GET http://localhost:3000/history/1
+Content-Type: application/json
+
+### DELETE HISTORY ID
+DELETE http://localhost:3000/history/22
+Content-Type: application/json
