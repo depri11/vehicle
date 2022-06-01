@@ -65,3 +65,25 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 
 	helper.ResponseJSON(w, http.StatusOK, "Success delete history")
 }
+
+func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
+	sort := r.URL.Query().Get("sort")
+
+	if sort == "asc" {
+		result, err := c.repository.Query(sort)
+		if err != nil {
+			helper.ResponseError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		helper.ResponseJSON(w, http.StatusOK, result)
+		return
+	}
+
+	result, err := c.repository.FindAll()
+	if err != nil {
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	helper.ResponseJSON(w, http.StatusOK, result)
+}

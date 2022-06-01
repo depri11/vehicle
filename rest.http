@@ -99,6 +99,10 @@ Content-Type: application/json
 GET http://localhost:3000/history/
 Content-Type: application/json
 
+### QUERY
+GET http://localhost:3000/history/all?sort=asc
+Content-Type: application/json
+
 ### GET HISTORY ID
 GET http://localhost:3000/history/6
 Content-Type: application/json

@@ -1,6 +1,8 @@
 package history
 
 import (
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -14,7 +16,7 @@ func NewRepository(db *gorm.DB) *repository {
 
 func (r *repository) FindAll() (*Historyss, error) {
 	var historys Historyss
-	err := r.db.Preload("Vehicle").Find(&historys).Error
+	err := r.db.Order("id desc").Preload("Vehicle").Find(&historys).Error
 	if err != nil {
 		return nil, err
 	}
@@ -40,4 +42,15 @@ func (r *repository) Delete(ID int) error {
 	}
 
 	return nil
+}
+
+func (r *repository) Query(sort string) (*Historyss, error) {
+	var historys Historyss
+
+	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("Vehicle").Find(&historys).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &historys, nil
 }
