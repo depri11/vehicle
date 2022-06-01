@@ -21,6 +21,7 @@ func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
 		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
 	helper.ResponseJSON(w, http.StatusOK, result)

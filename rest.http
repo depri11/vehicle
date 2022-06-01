@@ -22,7 +22,7 @@ GET http://localhost:3000/users/27
 Content-Type: application/json
 
 ### UPDATE USER
-POST http://localhost:3000/users/24
+POST http://localhost:3000/users/27
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/19
+DELETE http://localhost:3000/users/27
 Content-Type: application/json
 
 
@@ -96,7 +96,7 @@ GET http://localhost:3000/history/
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/1
+GET http://localhost:3000/history/6
 Content-Type: application/json
 
 ### DELETE HISTORY ID

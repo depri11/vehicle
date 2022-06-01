@@ -20,13 +20,14 @@ func NewController(repository *repository) *controller {
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	data, err := c.repository.FindAll()
+	result, err := c.repository.FindAll()
 	if err != nil {
-		fmt.Fprint(w, err.Error())
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
 	// json.NewEncoder(w).Encode(data)
-	helper.ResponseJSON(w, http.StatusOK, data)
+	helper.ResponseJSON(w, http.StatusOK, result)
 
 }
 
@@ -36,12 +37,12 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Save(&data)
 	if err != nil {
-		fmt.Fprint(w, err.Error())
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
 	// json.NewEncoder(w).Encode(&result)
 	helper.ResponseJSON(w, http.StatusOK, result)
-
 }
 
 func (c *controller) GetUser(w http.ResponseWriter, r *http.Request) {
@@ -85,7 +86,6 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	// json.NewEncoder(w).Encode(result)
 	helper.ResponseJSON(w, http.StatusOK, result)
-
 }
 
 func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {

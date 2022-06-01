@@ -24,7 +24,6 @@ func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helper.ResponseError(w, http.StatusBadRequest, err.Error())
 	}
-
 	helper.ResponseJSON(w, http.StatusOK, result)
 }
 
@@ -57,6 +56,7 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 
 	// json.NewEncoder(w).Encode(&result)
 	helper.ResponseJSON(w, http.StatusOK, result)
+
 }
 
 func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
@@ -107,7 +107,6 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helper.ResponseJSON(w, http.StatusOK, "Success delete data")
-
 }
 
 func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
