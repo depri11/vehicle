@@ -50,7 +50,7 @@ POST http://localhost:3000/vehicle/
 Content-Type: application/json
 
 {
-    "name": "Fixie - Gray Only 2",
+    "name": "Sepeda Motor",
     "city": "city",
     "available": true,
     "prepayment": false,
@@ -58,12 +58,12 @@ Content-Type: application/json
     "type": "Bike",
     "reservation": "08-05-2022",
     "price": "Rp100.000",
-    "likes": 30,
+    "likes": 299,
     "quantity": 5
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/8
+GET http://localhost:3000/vehicle/15
 Content-Type: application/json
 
 ### UPDATE VEHICLE
@@ -84,7 +84,11 @@ Content-Type: application/json
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/966
+DELETE http://localhost:3000/vehicle/12
+Content-Type: application/json
+
+### POPULAR VEHICLE
+GET http://localhost:3000/vehicle/popular
 Content-Type: application/json
 
 ################################ HISTORY ################################
@@ -92,9 +96,9 @@ GET http://localhost:3000/history/
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/3
+GET http://localhost:3000/history/1
 Content-Type: application/json
 
 ### DELETE HISTORY ID
-DELETE http://localhost:3000/history/3
+DELETE http://localhost:3000/history/5
 Content-Type: application/json

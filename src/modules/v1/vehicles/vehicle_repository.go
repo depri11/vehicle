@@ -60,3 +60,13 @@ func (r *repository) Delete(ID int) error {
 
 	return nil
 }
+
+func (r *repository) Popular() (Vehicles, error) {
+	var vehicle Vehicles
+	err := r.db.Order("likes desc").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return vehicle, nil
+}

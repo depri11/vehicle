@@ -109,3 +109,12 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	helper.ResponseJSON(w, http.StatusOK, "Success delete data")
 
 }
+
+func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
+	result, err := c.repository.Popular()
+	if err != nil {
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+	}
+
+	helper.ResponseJSON(w, http.StatusOK, result)
+}

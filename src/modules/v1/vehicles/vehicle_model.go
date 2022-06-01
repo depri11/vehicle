@@ -12,7 +12,7 @@ type Vehicle struct {
 	Type        string        `json:"type"`
 	Reservation string        `json:"reservation"`
 	Price       string        `json:"price"`
-	Likes       int           `json:"like"`
+	Likes       int           `json:"likes"`
 	Quantity    int           `json:"quantity"`
 	Images      VehicleImages `json:"images"`
 	CreatedAt   time.Time
