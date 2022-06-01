@@ -23,6 +23,7 @@ func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
 		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 	helper.ResponseJSON(w, http.StatusOK, result)
 }
@@ -33,7 +34,8 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Save(&vehicle)
 	if err != nil {
-		fmt.Fprint(w, err.Error())
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
 	// json.NewEncoder(w).Encode(&result)
@@ -113,7 +115,30 @@ func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.Popular()
 	if err != nil {
 		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
+	helper.ResponseJSON(w, http.StatusOK, result)
+}
+
+func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
+	sort := r.URL.Query().Get("sort")
+
+	if sort == "desc" {
+		result, err := c.repository.Query(sort)
+		if err != nil {
+			helper.ResponseError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		helper.ResponseJSON(w, http.StatusOK, result)
+		return
+	}
+
+	result, err := c.repository.FindAll()
+	if err != nil {
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
+		return
+	}
 	helper.ResponseJSON(w, http.StatusOK, result)
 }
