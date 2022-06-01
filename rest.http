@@ -1,3 +1,4 @@
+################################ USERS ################################
 GET http://localhost:3000/users/
 Content-Type: application/json
 
@@ -37,4 +38,51 @@ Content-Type: application/json
 
 ### DELETE USER BY ID
 DELETE http://localhost:3000/users/19
+Content-Type: application/json
+
+
+################################ VEHICLE ################################
+GET http://localhost:3000/vehicle/
+Content-Type: application/json
+
+### CREATE VEHICLE
+POST http://localhost:3000/vehicle/
+Content-Type: application/json
+
+{
+    "name": "Fixie - Gray Only 2",
+    "city": "city",
+    "available": true,
+    "prepayment": false,
+    "capacity": 2,
+    "type": "Bike",
+    "reservation": "08-05-2022",
+    "price": "Rp100.000",
+    "likes": 30,
+    "quantity": 5
+}
+
+### GET VEHICLE BY ID
+GET http://localhost:3000/vehicle/8
+Content-Type: application/json
+
+### UPDATE VEHICLE
+POST http://localhost:3000/vehicle/8
+Content-Type: application/json
+
+{
+    "name": "Fixie - Gray Only UPDATED",
+    "city": "city",
+    "available": true,
+    "prepayment": false,
+    "capacity": 2,
+    "type": "Bike",
+    "reservation": "08/05/2022",
+    "price": "Rp100.000",
+    "likes": 30,
+    "quantity": 5
+}
+
+### DELETE VEHICLE
+DELETE http://localhost:3000/vehicle/9
 Content-Type: application/json

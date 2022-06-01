@@ -3,7 +3,7 @@ package users
 import "time"
 
 type User struct {
-	ID        int    `gorm:"primaryKey" json:"id"`
+	ID        uint   `gorm:"primaryKey" json:"id"`
 	Fullname  string `json:"fullname"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`

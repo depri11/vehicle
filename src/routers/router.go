@@ -5,6 +5,7 @@ import (
 
 	"github.com/depri11/vehicle/src/configs/database"
 	"github.com/depri11/vehicle/src/modules/v1/users"
+	vehicle "github.com/depri11/vehicle/src/modules/v1/vehicles"
 	"github.com/gorilla/mux"
 )
 
@@ -16,6 +17,7 @@ func SetupRouter() (*mux.Router, error) {
 	}
 
 	users.NewRoute(route, db)
+	vehicle.NewRoute(route, db)
 
 	return route, nil
 }
