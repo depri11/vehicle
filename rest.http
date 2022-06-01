@@ -49,6 +49,10 @@ Content-Type: application/json
 GET http://localhost:3000/vehicle/all
 Content-Type: application/json
 
+### SEARCH
+GET http://localhost:3000/vehicle/all
+Content-Type: application/json
+
 ### CREATE VEHICLE
 POST http://localhost:3000/vehicle/
 Content-Type: application/json

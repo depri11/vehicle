@@ -73,12 +73,23 @@ func (r *repository) Popular() (Vehicles, error) {
 	return vehicle, nil
 }
 
-func (r *repository) Query(sort string) (Vehicles, error) {
+func (r *repository) Query(sort string) (*Vehicles, error) {
 	var vehicle Vehicles
 	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return vehicle, nil
+	return &vehicle, nil
+}
+
+func (r *repository) Search(search string) (*Vehicles, error) {
+	var vehicle Vehicles
+	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &vehicle, nil
+
 }
