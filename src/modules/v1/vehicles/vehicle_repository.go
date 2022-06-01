@@ -58,3 +58,22 @@ func (r *repository) Delete(ID int) error {
 
 	return nil
 }
+
+func (r *repository) GetImage(VehicleID int) (VehicleImages, error) {
+	var image VehicleImages
+	err := r.db.Where("vehicle_id = ?", VehicleID).Find(&image).Error
+	if err != nil {
+		return image, err
+	}
+
+	return image, nil
+}
+
+func (r *repository) CreateImage(image *VehicleImage) (*VehicleImage, error) {
+	err := r.db.Create(&image).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return image, nil
+}

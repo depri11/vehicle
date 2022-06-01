@@ -67,7 +67,7 @@ GET http://localhost:3000/vehicle/8
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-POST http://localhost:3000/vehicle/8
+POST http://localhost:3000/vehicle/877
 Content-Type: application/json
 
 {
@@ -84,5 +84,9 @@ Content-Type: application/json
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/9
+DELETE http://localhost:3000/vehicle/966
+Content-Type: application/json
+
+###
+GET http://localhost:3000/vehicle/images/8
 Content-Type: application/json
