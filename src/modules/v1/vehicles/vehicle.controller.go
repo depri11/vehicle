@@ -51,17 +51,9 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetID(param)
 	if err != nil {
-		helper.ResponseError(w, http.StatusBadRequest, "Vehicle not found")
+		helper.ResponseError(w, http.StatusBadRequest, "Data not found")
 		return
 	}
-
-	images, err := c.repository.GetImage(param)
-	if err != nil {
-		helper.ResponseError(w, http.StatusBadRequest, "Fail load images")
-		return
-	}
-
-	result.Images = images
 
 	// json.NewEncoder(w).Encode(&result)
 	helper.ResponseJSON(w, http.StatusOK, result)
@@ -115,32 +107,5 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helper.ResponseJSON(w, http.StatusOK, "Success delete data")
-
-}
-
-func (c *controller) SaveVehicleImages(w http.ResponseWriter, r *http.Request) {
-	var image VehicleImage
-	params := mux.Vars(r)["id"]
-	id, err := strconv.Atoi(params)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-
-	_, err = c.repository.GetID(id)
-	if err != nil {
-		helper.ResponseError(w, http.StatusBadRequest, "Vehicle not found")
-		return
-	}
-
-	json.NewDecoder(r.Body).Decode(&image)
-
-	result, err := c.repository.CreateImage(&image)
-	if err != nil {
-		helper.ResponseError(w, http.StatusBadRequest, "failed create image")
-		return
-	}
-
-	helper.ResponseJSON(w, http.StatusOK, result)
 
 }

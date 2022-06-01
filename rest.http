@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/24222
+GET http://localhost:3000/users/27
 Content-Type: application/json
 
 ### UPDATE USER
@@ -85,8 +85,4 @@ Content-Type: application/json
 
 ### DELETE VEHICLE
 DELETE http://localhost:3000/vehicle/966
-Content-Type: application/json
-
-###
-GET http://localhost:3000/vehicle/images/8
 Content-Type: application/json

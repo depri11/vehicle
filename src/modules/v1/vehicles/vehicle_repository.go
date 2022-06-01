@@ -1,6 +1,8 @@
 package vehicle
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type repository struct {
 	db *gorm.DB
@@ -13,7 +15,7 @@ func NewRepository(db *gorm.DB) *repository {
 func (r *repository) FindAll() (*Vehicles, error) {
 	var vehicles Vehicles
 
-	err := r.db.Find(&vehicles).Error
+	err := r.db.Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicles).Error
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +34,7 @@ func (r *repository) Save(vehicle *Vehicle) (*Vehicle, error) {
 
 func (r *repository) GetID(ID int) (*Vehicle, error) {
 	var vehicle Vehicle
-	err := r.db.First(&vehicle, ID).Error
+	err := r.db.Preload("Images", "vehicle_images.is_primary = 1").First(&vehicle, ID).Error
 	if err != nil {
 		return nil, err
 	}
@@ -57,23 +59,4 @@ func (r *repository) Delete(ID int) error {
 	}
 
 	return nil
-}
-
-func (r *repository) GetImage(VehicleID int) (VehicleImages, error) {
-	var image VehicleImages
-	err := r.db.Where("vehicle_id = ?", VehicleID).Find(&image).Error
-	if err != nil {
-		return image, err
-	}
-
-	return image, nil
-}
-
-func (r *repository) CreateImage(image *VehicleImage) (*VehicleImage, error) {
-	err := r.db.Create(&image).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return image, nil
 }
