@@ -124,7 +124,7 @@ func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
 func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
 
-	if sort == "desc" {
+	if sort == "asc" {
 		result, err := c.repository.Query(sort)
 		if err != nil {
 			helper.ResponseError(w, http.StatusBadRequest, err.Error())

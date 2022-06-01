@@ -17,7 +17,7 @@ func NewRepository(db *gorm.DB) *repository {
 func (r *repository) FindAll() (*Vehicles, error) {
 	var vehicles Vehicles
 
-	err := r.db.Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicles).Error
+	err := r.db.Order("id desc").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicles).Error
 	if err != nil {
 		return nil, err
 	}
