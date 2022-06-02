@@ -3,7 +3,6 @@ package history
 import (
 	"fmt"
 
-	vehicle "github.com/depri11/vehicle/src/modules/v1/vehicles"
 	"gorm.io/gorm"
 )
 
@@ -35,6 +34,15 @@ func (r *repository) GetID(ID int) (*Historys, error) {
 	return &historys, nil
 }
 
+func (r *repository) Save(history *Historys) (*Historys, error) {
+	err := r.db.Create(&history).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return history, nil
+}
+
 func (r *repository) Delete(ID int) error {
 	var history Historys
 	err := r.db.Where("id = ?", ID).Delete(&history).Error
@@ -56,15 +64,13 @@ func (r *repository) Query(sort string) (*Historyss, error) {
 	return &historys, nil
 }
 
-func (r *repository) Search(search string) (*vehicle.Vehicle, error) {
-	// var historys Historyss
-	var vehicle vehicle.Vehicle
-	// err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("Vehicle").Preload("User").Find(&vehicle).Error
-	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("User").Find(&vehicle).Error
+func (r *repository) Search(search string) (*Historyss, error) {
+	var historys Historyss
+	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("User").Find(&historys).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &vehicle, nil
+	return &historys, nil
 
 }

@@ -103,12 +103,24 @@ Content-Type: application/json
 GET http://localhost:3000/history/
 Content-Type: application/json
 
+### CREATE
+POST http://localhost:3000/history/
+Content-Type: application/json
+
+{
+    "name": "Mobil",
+    "Duration": "2 Day",
+    "prepayment": "Rp200.000",
+    "returned": false,
+    "user_id": 26
+}
+
 ### QUERY
 GET http://localhost:3000/history/all?sort=asc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/history/all?search=e
+GET http://localhost:3000/history/all?search=g
 Content-Type: application/json
 
 ### GET HISTORY ID

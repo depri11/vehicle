@@ -8,11 +8,24 @@ import (
 
 type Historys struct {
 	ID         int         `json:"id" gorm:"primaryKey"`
+	UserID     int         `json:"user_id"`
 	Name       string      `json:"name"`
 	Duration   string      `json:"duration"`
 	Prepayment string      `json:"prepayment"`
 	Returned   bool        `json:"returned"`
-	User       users.Users `json:"user"`
+	User       *users.User `json:"user"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+}
+
+type CreateHistorys struct {
+	ID         int        `json:"id" gorm:"primaryKey"`
+	UserID     int        `json:"user_id"`
+	Name       string     `json:"name"`
+	Duration   string     `json:"duration"`
+	Prepayment string     `json:"prepayment"`
+	Returned   bool       `json:"returned"`
+	User       users.User `json:"user"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

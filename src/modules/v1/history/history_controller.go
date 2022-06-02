@@ -1,6 +1,7 @@
 package history
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -38,6 +39,20 @@ func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.GetID(param)
 	if err != nil {
 		helper.ResponseError(w, http.StatusBadRequest, "Data not found")
+		return
+	}
+
+	// json.NewEncoder(w).Encode(&result)
+	helper.ResponseJSON(w, http.StatusOK, result)
+}
+
+func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
+	var data Historys
+	json.NewDecoder(r.Body).Decode(&data)
+
+	result, err := c.repository.Save(&data)
+	if err != nil {
+		helper.ResponseError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
