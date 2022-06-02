@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/depri11/vehicle/src/helper"
 	"github.com/gorilla/mux"
@@ -68,6 +69,20 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 
 func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
+	search := r.URL.Query().Get("search")
+
+	string := strings.ToLower(search)
+
+	if search != "" {
+		result, err := c.repository.Search(string)
+		if err != nil {
+			helper.ResponseError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		helper.ResponseJSON(w, http.StatusOK, result)
+		return
+	}
 
 	if sort == "asc" {
 		result, err := c.repository.Query(sort)
