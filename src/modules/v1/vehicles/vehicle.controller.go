@@ -23,7 +23,7 @@ func NewController(repository *repository) *controller {
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed update Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -56,7 +56,7 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -76,7 +76,7 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 
 	vehicle, err := c.repository.GetID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -105,7 +105,7 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 
 	_, err = c.repository.GetID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}

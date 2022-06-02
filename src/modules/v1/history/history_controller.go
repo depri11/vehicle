@@ -22,7 +22,7 @@ func NewController(repository *repository) *controller {
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed to get Historys", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed to get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -40,7 +40,7 @@ func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -73,7 +73,7 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 
 	_, err = c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get History", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get History", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -123,7 +123,7 @@ func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusInternalServerError, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}

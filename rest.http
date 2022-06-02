@@ -18,11 +18,11 @@ Content-Type: application/json
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/28
+GET http://localhost:3000/users/30
 Content-Type: application/json
 
 ### UPDATE USER
-POST http://localhost:3000/users/27
+POST http://localhost:3000/users/30
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/27
+DELETE http://localhost:3000/users/5522
 Content-Type: application/json
 
 

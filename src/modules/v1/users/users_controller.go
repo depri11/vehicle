@@ -22,7 +22,7 @@ func NewController(repository *repository) *controller {
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed to get all data users", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed to get all data users", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -56,7 +56,7 @@ func (c *controller) GetUser(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetUserID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get user", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get user", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -76,7 +76,7 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	user, err := c.repository.GetUserID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get User", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON(w, "Failed get User", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
