@@ -1,23 +1,31 @@
 package helper
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
-func ResponseJSON(w http.ResponseWriter, status int, payload interface{}) {
-	result, err := json.Marshal(payload)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write([]byte(result))
-
+type Res struct {
+	Meta Meta        `json:"meta"`
+	Data interface{} `json:"data"`
 }
 
-func ResponseError(w http.ResponseWriter, code int, message string) {
-	ResponseJSON(w, code, map[string]string{"error": message})
+type Meta struct {
+	Message string `json:"message"`
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+}
+
+func ResponseJSON(w http.ResponseWriter, message string, code int, status string, data interface{}) Res {
+	w.Header().Set("Content-Type", "application/json")
+	meta := Meta{
+		Message: message,
+		Code:    code,
+		Status:  status,
+	}
+	response := Res{
+		Meta: meta,
+		Data: data,
+	}
+
+	return response
 }
