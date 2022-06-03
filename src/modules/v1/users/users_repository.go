@@ -4,18 +4,26 @@ import (
 	"gorm.io/gorm"
 )
 
+type Repository interface {
+	FindAll() (*Users, error)
+	Save(user *User) (*User, error)
+	GetUserID(ID int) (*User, error)
+	Update(user *User) (*User, error)
+	Delete(ID int) error
+}
+
 type repository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) *repository {
+func NewRepository(db *gorm.DB) Repository {
 	return &repository{db}
 }
 
 func (r *repository) FindAll() (*Users, error) {
 	var users Users
 
-	err := r.db.Order("id desc").Find(&users).Error
+	err := r.db.Order("id desc").Preload("Historys").Find(&users).Error
 
 	if err != nil {
 		return nil, err

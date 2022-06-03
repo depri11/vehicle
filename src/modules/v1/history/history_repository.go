@@ -6,17 +6,26 @@ import (
 	"gorm.io/gorm"
 )
 
+type Repository interface {
+	FindAll() (*Historyss, error)
+	GetID(ID int) (*Historys, error)
+	Save(history *Historys) (*Historys, error)
+	Delete(ID int) error
+	Query(sort string) (*Historyss, error)
+	Search(search string) (*Historyss, error)
+}
+
 type repository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) *repository {
+func NewRepository(db *gorm.DB) Repository {
 	return &repository{db}
 }
 
 func (r *repository) FindAll() (*Historyss, error) {
 	var historys Historyss
-	err := r.db.Order("id desc").Preload("User").Find(&historys).Error
+	err := r.db.Order("id desc").Find(&historys).Error
 	if err != nil {
 		return nil, err
 	}

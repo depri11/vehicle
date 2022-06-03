@@ -6,11 +6,22 @@ import (
 	"gorm.io/gorm"
 )
 
+type Repository interface {
+	FindAll() (*Vehicles, error)
+	Save(vehicle *Vehicle) (*Vehicle, error)
+	GetID(ID int) (*Vehicle, error)
+	Update(vehicle *Vehicle) (*Vehicle, error)
+	Delete(ID int) error
+	Popular() (*Vehicles, error)
+	Query(sort string) (*Vehicles, error)
+	Search(search string) (*Vehicles, error)
+}
+
 type repository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) *repository {
+func NewRepository(db *gorm.DB) Repository {
 	return &repository{db}
 }
 
@@ -63,14 +74,14 @@ func (r *repository) Delete(ID int) error {
 	return nil
 }
 
-func (r *repository) Popular() (Vehicles, error) {
+func (r *repository) Popular() (*Vehicles, error) {
 	var vehicle Vehicles
 	err := r.db.Order("likes desc").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return vehicle, nil
+	return &vehicle, nil
 }
 
 func (r *repository) Query(sort string) (*Vehicles, error) {

@@ -13,10 +13,10 @@ import (
 )
 
 type controller struct {
-	repository *repository
+	repository Repository
 }
 
-func NewController(repository *repository) *controller {
+func NewController(repository Repository) *controller {
 	return &controller{repository}
 }
 

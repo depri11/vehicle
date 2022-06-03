@@ -18,11 +18,11 @@ Content-Type: application/json
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/30
+GET http://localhost:3000/users/26
 Content-Type: application/json
 
 ### UPDATE USER
-POST http://localhost:3000/users/30
+POST http://localhost:3000/users/26
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/5522
+DELETE http://localhost:3000/users/26
 Content-Type: application/json
 
 
@@ -46,11 +46,11 @@ GET http://localhost:3000/vehicle/
 Content-Type: application/json
 
 ### QUERY
-GET http://localhost:3000/vehicle/all
+GET http://localhost:3000/vehicle/all?sort=desc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/vehicle/all
+GET http://localhost:3000/vehicle/all?search=m
 Content-Type: application/json
 
 ### CREATE VEHICLE
@@ -58,7 +58,7 @@ POST http://localhost:3000/vehicle/
 Content-Type: application/json
 
 {
-    "name": "Sepeda Motor",
+    "name": "Sepeda",
     "city": "city",
     "available": true,
     "prepayment": false,
@@ -71,28 +71,28 @@ Content-Type: application/json
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/15
+GET http://localhost:3000/vehicle/17
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-POST http://localhost:3000/vehicle/877
+POST http://localhost:3000/vehicle/17
 Content-Type: application/json
 
 {
-    "name": "Fixie - Gray Only UPDATED",
+    "name": "Sepeda2",
     "city": "city",
     "available": true,
     "prepayment": false,
     "capacity": 2,
     "type": "Bike",
-    "reservation": "08/05/2022",
+    "reservation": "08-05-2022",
     "price": "Rp100.000",
-    "likes": 30,
+    "likes": 299,
     "quantity": 5
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/12
+DELETE http://localhost:3000/vehicle/17
 Content-Type: application/json
 
 ### POPULAR VEHICLE
@@ -108,7 +108,7 @@ POST http://localhost:3000/history/
 Content-Type: application/json
 
 {
-    "name": "Mobil",
+    "name": "Sepeda",
     "Duration": "2 Day",
     "prepayment": "Rp200.000",
     "returned": false,
@@ -120,13 +120,13 @@ GET http://localhost:3000/history/all?sort=asc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/history/all?search=g
+GET http://localhost:3000/history/all?search=m
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/6
+GET http://localhost:3000/history/21
 Content-Type: application/json
 
 ### DELETE HISTORY ID
-DELETE http://localhost:3000/history/5
+DELETE http://localhost:3000/history/21
 Content-Type: application/json
