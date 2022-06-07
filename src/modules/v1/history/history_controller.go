@@ -3,6 +3,7 @@ package history
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -62,6 +63,35 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 
 	res := helper.ResponseJSON(w, "Successfully create History", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
+}
+
+func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["id"]
+	id, err := strconv.Atoi(params)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	history, err := c.repository.GetID(id)
+	if err != nil {
+		res := helper.ResponseJSON(w, "Failed get History", http.StatusNotFound, "error", err.Error())
+		json.NewEncoder(w).Encode(res)
+		return
+	}
+
+	json.NewDecoder(r.Body).Decode(&history)
+
+	result, err := c.repository.Update(history)
+	if err != nil {
+		res := helper.ResponseJSON(w, "Failed update History", http.StatusBadRequest, "error", err.Error())
+		json.NewEncoder(w).Encode(res)
+		return
+	}
+
+	res := helper.ResponseJSON(w, "Successfully updated History", http.StatusOK, "success", result)
+	json.NewEncoder(w).Encode(res)
+
 }
 
 func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {

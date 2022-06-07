@@ -16,7 +16,7 @@ func NewRoute(r *mux.Router, db *gorm.DB) {
 	route.HandleFunc("/popular", controller.PopularVehicle).Methods("GET")
 	route.HandleFunc("/", controller.Create).Methods("POST")
 	route.HandleFunc("/{id}", controller.GetVehicle).Methods("GET")
-	route.HandleFunc("/{id}", controller.UpdateVehicle).Methods("POST")
+	route.HandleFunc("/{id}", controller.UpdateVehicle).Methods("PUT")
 	route.HandleFunc("/{id}", controller.DeleteVehicle).Methods("DELETE")
 
 }

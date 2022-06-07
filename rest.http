@@ -46,11 +46,11 @@ GET http://localhost:3000/vehicle/
 Content-Type: application/json
 
 ### QUERY
-GET http://localhost:3000/vehicle/all?sort=desc
+GET http://localhost:3000/vehicle/all?sort=asc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/vehicle/all?search=m
+GET http://localhost:3000/vehicle/all?search=mobil
 Content-Type: application/json
 
 ### CREATE VEHICLE
@@ -71,15 +71,15 @@ Content-Type: application/json
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/17
+GET http://localhost:3000/vehicle/19
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-POST http://localhost:3000/vehicle/17
+PUT http://localhost:3000/vehicle/14
 Content-Type: application/json
 
 {
-    "name": "Sepeda2",
+    "name": "Sepeda update",
     "city": "city",
     "available": true,
     "prepayment": false,
@@ -92,7 +92,7 @@ Content-Type: application/json
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/17
+DELETE http://localhost:3000/vehicle/19
 Content-Type: application/json
 
 ### POPULAR VEHICLE

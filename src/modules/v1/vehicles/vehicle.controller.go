@@ -96,7 +96,7 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)["id"]
+	params := mux.Vars(r)["id"]	
 	id, err := strconv.Atoi(params)
 	if err != nil {
 		log.Fatal(err)

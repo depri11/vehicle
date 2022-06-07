@@ -10,6 +10,7 @@ type Repository interface {
 	FindAll() (*Historyss, error)
 	GetID(ID int) (*Historys, error)
 	Save(history *Historys) (*Historys, error)
+	Update(history *Historys) (*Historys, error)
 	Delete(ID int) error
 	Query(sort string) (*Historyss, error)
 	Search(search string) (*Historyss, error)
@@ -25,7 +26,7 @@ func NewRepository(db *gorm.DB) Repository {
 
 func (r *repository) FindAll() (*Historyss, error) {
 	var historys Historyss
-	err := r.db.Order("id desc").Find(&historys).Error
+	err := r.db.Order("id desc").Preload("User").Find(&historys).Error
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +46,15 @@ func (r *repository) GetID(ID int) (*Historys, error) {
 
 func (r *repository) Save(history *Historys) (*Historys, error) {
 	err := r.db.Create(&history).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return history, nil
+}
+
+func (r *repository) Update(history *Historys) (*Historys, error) {
+	err := r.db.Save(&history).Error
 	if err != nil {
 		return nil, err
 	}
