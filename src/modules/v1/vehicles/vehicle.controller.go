@@ -23,11 +23,12 @@ func NewController(repository Repository) *controller {
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
-	res := helper.ResponseJSON(w, "List of Vehicle", http.StatusOK, "success", result)
+
+	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }
 
@@ -37,12 +38,12 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Save(&vehicle)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed create Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed create Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully created Vehicle", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("Successfully created Vehicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 
 }
@@ -56,12 +57,12 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List of Vehicle", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 
 }
@@ -76,7 +77,7 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 
 	vehicle, err := c.repository.GetID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -85,18 +86,18 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Update(vehicle)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed update Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed update Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully updated Vhicle", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("Successfully updated Vhicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 
 }
 
 func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)["id"]	
+	params := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(params)
 	if err != nil {
 		log.Fatal(err)
@@ -105,35 +106,35 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 
 	_, err = c.repository.GetID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicle", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
 	err = c.repository.Delete(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed deleted Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed deleted Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully deleted Vehicle", http.StatusOK, "success", nil)
+	res := helper.ResponseJSON("Successfully deleted Vehicle", http.StatusOK, "success", nil)
 	json.NewEncoder(w).Encode(res)
 }
 
 func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.Popular()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get popular Vehicle", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed get popular Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List popular Vehicle", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List popular Vehicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }
 
-func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
+func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
 	search := r.URL.Query().Get("search")
 
@@ -142,12 +143,12 @@ func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	if search != "" {
 		result, err := c.repository.Search(string)
 		if err != nil {
-			res := helper.ResponseJSON(w, "Internal Server Error", http.StatusInternalServerError, "error", err.Error())
+			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
 			json.NewEncoder(w).Encode(res)
 			return
 		}
 
-		res := helper.ResponseJSON(w, "List data Search", http.StatusOK, "success", result)
+		res := helper.ResponseJSON("List data Search", http.StatusOK, "success", result)
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -155,23 +156,23 @@ func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	if sort == "asc" {
 		result, err := c.repository.Query(sort)
 		if err != nil {
-			res := helper.ResponseJSON(w, "Internal Server Error", http.StatusInternalServerError, "error", err.Error())
+			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
 			json.NewEncoder(w).Encode(res)
 			return
 		}
 
-		res := helper.ResponseJSON(w, "List data Search", http.StatusOK, "success", result)
+		res := helper.ResponseJSON("List data Search", http.StatusOK, "success", result)
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Vehicles", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Vehicles", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List of Vehicle", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }

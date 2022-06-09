@@ -9,11 +9,12 @@ func NewRoute(r *mux.Router, db *gorm.DB) {
 	route := r.PathPrefix("/users").Subrouter()
 
 	repository := NewRepository(db)
-	controller := NewController(repository)
+	service := NewService(repository)
+	controller := NewController(service)
 
 	route.HandleFunc("/", controller.GetAll).Methods("GET")
-	route.HandleFunc("/", controller.Create).Methods("POST")
-	route.HandleFunc("/{id}", controller.GetUser).Methods("GET")
-	route.HandleFunc("/{id}", controller.UpdateUser).Methods("POST")
-	route.HandleFunc("/{id}", controller.DeleteUser).Methods("DELETE")
+	route.HandleFunc("/", controller.Register).Methods("POST")
+	// route.HandleFunc("/{id}", controller.GetUser).Methods("GET")
+	// route.HandleFunc("/{id}", controller.UpdateUser).Methods("POST")
+	// route.HandleFunc("/{id}", controller.DeleteUser).Methods("DELETE")
 }

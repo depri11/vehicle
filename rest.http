@@ -2,19 +2,28 @@
 GET http://localhost:3000/users/
 Content-Type: application/json
 
-### CREATE USER
+### REGISTER USER
 POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
     "fullname": "Devri",
-    "email": "dv@gmail.com",
+    "email": "devri@gmail.com",
     "password": "123",
     "phone": "0822",
     "gender": "Male",
     "address": "Indonesia",
     "nickname": "Devri",
     "birthday": "03/01/2001"
+}
+
+### LOGIN USER
+POST http://localhost:3000/auth/
+Content-Type: application/json
+
+{
+    "email": "devri1@gmail.com",
+    "password": "123"
 }
 
 ### GET USER BY ID
@@ -45,37 +54,29 @@ Content-Type: application/json
 GET http://localhost:3000/vehicle/
 Content-Type: application/json
 
-### QUERY
-GET http://localhost:3000/vehicle/all?sort=asc
-Content-Type: application/json
-
-### SEARCH
-GET http://localhost:3000/vehicle/all?search=mobil
-Content-Type: application/json
-
 ### CREATE VEHICLE
 POST http://localhost:3000/vehicle/
 Content-Type: application/json
 
 {
     "name": "Sepeda",
-    "city": "city",
+    "city": "Indonesia",
     "available": true,
     "prepayment": false,
     "capacity": 2,
     "type": "Bike",
-    "reservation": "08-05-2022",
-    "price": "Rp100.000",
-    "likes": 299,
-    "quantity": 5
+    "reservation": "20-05-2022",
+    "price": "Rp1.000.000",
+    "likes": 5,
+    "quantity": 2
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/19
+GET http://localhost:3000/vehicle/24
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-PUT http://localhost:3000/vehicle/14
+PUT http://localhost:3000/vehicle/77
 Content-Type: application/json
 
 {
@@ -85,18 +86,26 @@ Content-Type: application/json
     "prepayment": false,
     "capacity": 2,
     "type": "Bike",
-    "reservation": "08-05-2022",
-    "price": "Rp100.000",
-    "likes": 299,
-    "quantity": 5
+    "reservation": "20-05-2022",
+    "price": "Rp1.000.000",
+    "likes": 5,
+    "quantity": 2
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/19
+DELETE http://localhost:3000/vehicle/24
 Content-Type: application/json
 
 ### POPULAR VEHICLE
 GET http://localhost:3000/vehicle/popular
+Content-Type: application/json
+
+### QUERY
+GET http://localhost:3000/vehicle/all?sort=desc&search=e
+Content-Type: application/json
+
+### SEARCH
+GET http://localhost:3000/vehicle/all?search=e
 Content-Type: application/json
 
 ################################ HISTORY ################################

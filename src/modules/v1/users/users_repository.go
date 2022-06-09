@@ -8,6 +8,7 @@ type Repository interface {
 	FindAll() (*Users, error)
 	Save(user *User) (*User, error)
 	GetUserID(ID int) (*User, error)
+	GetByEmail(email string) (*User, error)
 	Update(user *User) (*User, error)
 	Delete(ID int) error
 }
@@ -44,6 +45,16 @@ func (r *repository) Save(user *User) (*User, error) {
 func (r *repository) GetUserID(ID int) (*User, error) {
 	var user User
 	err := r.db.First(&user, ID).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (r *repository) GetByEmail(email string) (*User, error) {
+	var user User
+	err := r.db.Where("email = ?", email).Take(&user).Error
 	if err != nil {
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/depri11/vehicle/src/routers"
 )
@@ -14,7 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	port := ":3000"
+	port := os.Getenv("PORT")
 
 	fmt.Println("Running on port", port)
 	if err := http.ListenAndServe(port, mux); err != nil {

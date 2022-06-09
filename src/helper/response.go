@@ -1,9 +1,5 @@
 package helper
 
-import (
-	"net/http"
-)
-
 type Res struct {
 	Meta Meta        `json:"meta"`
 	Data interface{} `json:"data"`
@@ -15,8 +11,7 @@ type Meta struct {
 	Status  string `json:"status"`
 }
 
-func ResponseJSON(w http.ResponseWriter, message string, code int, status string, data interface{}) Res {
-	w.Header().Set("Content-Type", "application/json")
+func ResponseJSON(message string, code int, status string, data interface{}) *Res {
 	meta := Meta{
 		Message: message,
 		Code:    code,
@@ -27,5 +22,5 @@ func ResponseJSON(w http.ResponseWriter, message string, code int, status string
 		Data: data,
 	}
 
-	return response
+	return &response
 }

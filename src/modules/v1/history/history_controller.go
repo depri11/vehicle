@@ -23,12 +23,12 @@ func NewController(repository Repository) *controller {
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed to get Historys", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed to get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List of Historys", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List of Historys", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }
 
@@ -41,12 +41,12 @@ func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List user data", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List user data", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }
 
@@ -56,12 +56,12 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Save(&data)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed create Historys", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed create Historys", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully create History", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("Successfully create History", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }
 
@@ -75,7 +75,7 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 
 	history, err := c.repository.GetID(id)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get History", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get History", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -84,12 +84,12 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 
 	result, err := c.repository.Update(history)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed update History", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed update History", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully updated History", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("Successfully updated History", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 
 }
@@ -103,19 +103,19 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 
 	_, err = c.repository.GetID(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get History", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get History", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
 	err = c.repository.Delete(param)
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed delete History", http.StatusBadRequest, "error", err.Error())
+		res := helper.ResponseJSON("Failed delete History", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "Successfully deleted History", http.StatusOK, "success", nil)
+	res := helper.ResponseJSON("Successfully deleted History", http.StatusOK, "success", nil)
 	json.NewEncoder(w).Encode(res)
 }
 
@@ -128,12 +128,12 @@ func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	if search != "" {
 		result, err := c.repository.Search(string)
 		if err != nil {
-			res := helper.ResponseJSON(w, "Internal Server Error", http.StatusInternalServerError, "error", err.Error())
+			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
 			json.NewEncoder(w).Encode(res)
 			return
 		}
 
-		res := helper.ResponseJSON(w, "List search data", http.StatusOK, "success", result)
+		res := helper.ResponseJSON("List search data", http.StatusOK, "success", result)
 		json.NewEncoder(w).Encode(res)
 		return
 	}
@@ -141,23 +141,23 @@ func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
 	if sort == "asc" {
 		result, err := c.repository.Query(sort)
 		if err != nil {
-			res := helper.ResponseJSON(w, "Internal Server Error", http.StatusInternalServerError, "error", err.Error())
+			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
 			json.NewEncoder(w).Encode(res)
 			return
 		}
 
-		res := helper.ResponseJSON(w, "List sort data", http.StatusOK, "success", result)
+		res := helper.ResponseJSON("List sort data", http.StatusOK, "success", result)
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
 	result, err := c.repository.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON(w, "Failed get Historys", http.StatusNotFound, "error", err.Error())
+		res := helper.ResponseJSON("Failed get Historys", http.StatusNotFound, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON(w, "List of Historys", http.StatusOK, "success", result)
+	res := helper.ResponseJSON("List of Historys", http.StatusOK, "success", result)
 	json.NewEncoder(w).Encode(res)
 }

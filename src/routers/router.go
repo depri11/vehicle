@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/depri11/vehicle/src/configs/database"
+	"github.com/depri11/vehicle/src/modules/v1/auth"
 	"github.com/depri11/vehicle/src/modules/v1/history"
 	"github.com/depri11/vehicle/src/modules/v1/users"
 	vehicle "github.com/depri11/vehicle/src/modules/v1/vehicles"
@@ -17,6 +18,7 @@ func SetupRouter() (*mux.Router, error) {
 		return nil, errors.New("failed connecting to database")
 	}
 
+	auth.NewRoute(route, db)
 	users.NewRoute(route, db)
 	vehicle.NewRoute(route, db)
 	history.NewRoute(route, db)
