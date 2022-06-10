@@ -29,34 +29,34 @@ This is simple restful api crud with Golang
 
 #### Users
 
-| Method | URL                                          |
-| ------ | -------------------------------------------- |
-| GET    | http://localhost:3000/users/ (Get All)       |
-| GET    | http://localhost:3000/users/1 (Get By Id)    |
-| POST   | http://localhost:3000/users/ (Create)        |
-| PUT    | http://localhost:3000/users/ (Update by id)  |
-| DELETE | http://localhost:3000/users/1 (Delete By Id) |
+| Service      | Method | URL      |
+| ------------ | ------ | -------- |
+| Get All      | GET    | /users/  |
+| Get By Id    | GET    | /users/1 |
+| Create       | POST   | /users/  |
+| Update by id | PUT    | /users/  |
+| Delete By Id | DELETE | /users/1 |
 
 #### Vehicle
 
-| Method | URL                                                                    |
-| ------ | ---------------------------------------------------------------------- |
-| GET    | http://localhost:3000/vehicle/ (Get All)                               |
-| GET    | http://localhost:3000/vehicle/1 (Get By Id)                            |
-| POST   | http://localhost:3000/vehicle/ (Create)                                |
-| PUT    | http://localhost:3000/vehicle/ (Update by id)                          |
-| DELETE | http://localhost:3000/vehicle/1 (Delete by id)                         |
-| GET    | http://localhost:3000/vehicle/all?sort=asc (Sort by id ex:desc or asc) |
-| GET    | http://localhost:3000/vehicle/all?search=vespa (Search by name)        |
-| GET    | http://localhost:3000/vehicle/popular (Get popular by Likes)           |
+| Service                   | Method | URL                       |
+| ------------------------- | ------ | ------------------------- |
+| Get All                   | GET    | /vehicle/                 |
+| Get By Id                 | GET    | /vehicle/1                |
+| Create                    | POST   | /vehicle/                 |
+| Update by id              | PUT    | /vehicle/                 |
+| Delete by id              | DELETE | /vehicle/1                |
+| Sort by id ex:desc or asc | GET    | /vehicle/all?sort=asc     |
+| Search by name            | GET    | /vehicle/all?search=vespa |
+| Get popular by Likes      | GET    | /vehicle/popular          |
 
 #### Historys
 
-| Method | URL                                                                    |
-| ------ | ---------------------------------------------------------------------- |
-| GET    | http://localhost:3000/history/ (Get All)                               |
-| GET    | http://localhost:3000/history/1 (Get By Id)                            |
-| POST   | http://localhost:3000/history/ (Create)                                |
-| PUT    | http://localhost:3000/history/2 (Update by id)                         |
-| DELETE | http://localhost:3000/history/1 (Delete By Id)                         |
-| GET    | http://localhost:3000/history/all?sort=asc (Sort by id ex:desc or asc) |
+| Service                   | Method | URL                   |
+| ------------------------- | ------ | --------------------- |
+| Get All                   | GET    | /history/             |
+| Get By Id                 | GET    | /history/1            |
+| Create                    | POST   | /history/             |
+| Update by id              | PUT    | /history/2            |
+| Delete By Id              | DELETE | /history/1            |
+| Sort by id ex:desc or asc | GET    | /history/all?sort=asc |
