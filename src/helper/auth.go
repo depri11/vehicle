@@ -8,7 +8,7 @@ import (
 )
 
 type claims struct {
-	Email string `json"email"`
+	Email string `json:"email"`
 	jwt.StandardClaims
 }
 
@@ -21,10 +21,9 @@ func NewToken(email string) *claims {
 	}
 }
 
-func (c *claims) Create() string {
+func (c *claims) Create() (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
-	tokenString, _ := token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
-	return tokenString
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
 }
 
 func CheckToken(token string) (bool, error) {

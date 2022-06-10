@@ -39,7 +39,11 @@ func (s *service) Login(user users.User) *helper.Res {
 	}
 
 	token := helper.NewToken(data.Email)
-	tokens := token.Create()
+	tokens, err := token.Create()
+	if err != nil {
+		response := helper.ResponseJSON("Internal Server Error", 500, "error", nil)
+		return response
+	}
 
 	response := helper.ResponseJSON("Success", 200, "OK", tokenResponse{Token: tokens})
 	return response

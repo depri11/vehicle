@@ -2,9 +2,12 @@ package users
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/gorilla/mux"
 )
 
 type controller struct {
@@ -59,23 +62,21 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 // 	json.NewEncoder(w).Encode(res)
 // }
 
-// func (c *controller) GetUser(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)["id"]
-// 	param, err := strconv.Atoi(params)
-// 	if err != nil {
-// 		fmt.Println("error")
-// 	}
+func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["id"]
+	param, err := strconv.Atoi(params)
+	if err != nil {
+		fmt.Println("error")
+	}
 
-// 	result, err := c.repository.GetUserID(param)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed get user", http.StatusNotFound, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+	result := c.service.FindByID(param)
+	if err != nil {
+		json.NewEncoder(w).Encode(result)
+		return
+	}
 
-// 	res := helper.ResponseJSON("List data User", 200, "success", result)
-// 	json.NewEncoder(w).Encode(res)
-// }
+	json.NewEncoder(w).Encode(result)
+}
 
 // func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 // 	params := mux.Vars(r)["id"]

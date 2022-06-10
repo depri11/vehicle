@@ -7,6 +7,7 @@ import (
 type Service interface {
 	FindAll() (*helper.Res, error)
 	FindByEmail(email string) (*helper.Res, error)
+	FindByID(id int) *helper.Res
 	RegisterUser(user *User) (*helper.Res, error)
 }
 
@@ -36,6 +37,17 @@ func (r *service) FindByEmail(email string) (*helper.Res, error) {
 
 	response := helper.ResponseJSON("Success", 200, "OK", data)
 	return response, nil
+}
+
+func (r *service) FindByID(id int) *helper.Res {
+	data, err := r.repository.GetUserID(id)
+	if err != nil {
+		response := helper.ResponseJSON("User not found", 404, "error", nil)
+		return response
+	}
+
+	response := helper.ResponseJSON("Success", 200, "OK", &data)
+	return response
 }
 
 func (r *service) RegisterUser(user *User) (*helper.Res, error) {

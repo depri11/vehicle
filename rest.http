@@ -22,13 +22,14 @@ POST http://localhost:3000/auth/
 Content-Type: application/json
 
 {
-    "email": "devri1@gmail.com",
+    "email": "devri@gmail.com",
     "password": "123"
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/26
+GET http://localhost:3000/users/36
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldnJpQGdtYWlsLmNvbSIsImV4cCI6MTY1NDgyOTczMH0.MNn5CVLPl3KS2nvOMdQJyDbUW8MVWNhJPnih4nwwc-w
 
 ### UPDATE USER
 POST http://localhost:3000/users/26
