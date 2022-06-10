@@ -3,10 +3,10 @@ package users
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
-	"github.com/depri11/vehicle/src/helper"
 	"github.com/gorilla/mux"
 )
 
@@ -19,15 +19,15 @@ func NewController(service Service) *controller {
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	result, err := c.service.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON("Failed to get all data users", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Users", 200, "success", result)
-	json.NewEncoder(w).Encode(res)
+	result.Send(w)
 
 }
 
@@ -37,30 +37,15 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	json.NewDecoder(r.Body).Decode(&user)
+
 	res, err := c.service.RegisterUser(&user)
 	if err != nil {
-		res := helper.ResponseJSON("Failed to register user", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 }
-
-// func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
-// 	var data User
-// 	json.NewDecoder(r.Body).Decode(&data)
-
-// 	result, err := c.service.RegisterUser(&data)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed create data user", http.StatusBadRequest, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
-
-// 	res := helper.ResponseJSON("List of Users", 200, "success", result)
-// 	json.NewEncoder(w).Encode(res)
-// }
 
 func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
@@ -69,67 +54,57 @@ func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error")
 	}
 
-	result := c.service.FindByID(param)
+	result, err := c.service.FindByID(param)
 	if err != nil {
-		json.NewEncoder(w).Encode(result)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	json.NewEncoder(w).Encode(result)
+	result.Send(w)
 }
 
-// func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)["id"]
-// 	id, err := strconv.Atoi(params)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["id"]
+	reqUserId := r.Header.Get("user_id")
+	if reqUserId != params {
+		http.Error(w, "access danied", http.StatusBadRequest)
+		return
+	}
 
-// 	user, err := c.repository.GetUserID(id)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed get User", http.StatusNotFound, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+	id, err := strconv.Atoi(params)
+	if err != nil {
+		http.Error(w, "internal server error", http.StatusInternalServerError)
+		return
+	}
 
-// 	json.NewDecoder(r.Body).Decode(&user)
+	var inputData UserInput
 
-// 	result, err := c.repository.Update(user)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed update data user", http.StatusBadRequest, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+	json.NewDecoder(r.Body).Decode(&inputData)
 
-// 	res := helper.ResponseJSON("Success update data User", 200, "success", result)
-// 	json.NewEncoder(w).Encode(res)
-// }
+	result, err := c.service.UpdateUser(id, &inputData)
+	if err != nil {
+		http.Error(w, "fail update data", http.StatusBadRequest)
+		return
+	}
 
-// func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)["id"]
-// 	id, err := strconv.Atoi(params)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 		return
-// 	}
+	result.Send(w)
+}
 
-// 	_, err = c.repository.GetUserID(id)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed get user", http.StatusNotFound, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["id"]
+	// reqUserId := r.Header.Get("user_id")
+	id, err := strconv.Atoi(params)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 
-// 	err = c.repository.Delete(id)
-// 	if err != nil {
-// 		res := helper.ResponseJSON("Failed delete user", http.StatusNotFound, "error", err.Error())
-// 		json.NewEncoder(w).Encode(res)
-// 		return
-// 	}
+	res, err := c.service.Delete(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-// 	res := helper.ResponseJSON("Successfully delete user", 200, "success", nil)
-// 	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 
-// }
+}

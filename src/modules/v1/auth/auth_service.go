@@ -38,7 +38,7 @@ func (s *service) Login(user users.User) *helper.Res {
 		return response
 	}
 
-	token := helper.NewToken(data.Email)
+	token := helper.NewToken(int(data.ID), data.Email)
 	tokens, err := token.Create()
 	if err != nil {
 		response := helper.ResponseJSON("Internal Server Error", 500, "error", nil)

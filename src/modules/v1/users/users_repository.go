@@ -10,7 +10,7 @@ type Repository interface {
 	GetUserID(ID int) (*User, error)
 	GetByEmail(email string) (*User, error)
 	Update(user *User) (*User, error)
-	Delete(ID int) error
+	Delete(ID uint) error
 }
 
 type repository struct {
@@ -71,7 +71,7 @@ func (r *repository) Update(user *User) (*User, error) {
 	return user, nil
 }
 
-func (r *repository) Delete(ID int) error {
+func (r *repository) Delete(ID uint) error {
 	var user User
 	err := r.db.Where("id = ?", ID).Delete(&user).Error
 	if err != nil {
