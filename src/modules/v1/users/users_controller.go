@@ -84,11 +84,9 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var inputData UserInput
+	var inputData User
 
 	json.NewDecoder(r.Body).Decode(&inputData)
-
-	fmt.Println(inputData.Password)
 
 	err = helper.ValidationError(inputData)
 	if err != nil {

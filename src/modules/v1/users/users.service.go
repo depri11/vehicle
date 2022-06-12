@@ -9,7 +9,7 @@ type Service interface {
 	FindByEmail(email string) (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
 	RegisterUser(user *User) (*helper.Res, error)
-	UpdateUser(id int, user *UserInput) (*helper.Res, error)
+	UpdateUser(id int, user *User) (*helper.Res, error)
 	Delete(id int) (*helper.Res, error)
 }
 
@@ -86,7 +86,7 @@ func (r *service) Delete(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) UpdateUser(id int, user *UserInput) (*helper.Res, error) {
+func (r *service) UpdateUser(id int, user *User) (*helper.Res, error) {
 	data, err := r.repository.GetUserID(id)
 	if err != nil {
 		return nil, err

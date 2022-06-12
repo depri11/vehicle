@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
     "email": "dev@gmail.com",
-    "password": "123"
+    "password": "123456"
 }
 
 ### GET USER BY ID
@@ -32,9 +32,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiZXhwIjoxNjU0OTQ4Njg2fQ.eIjE9BR7aF3jqZAidu2xWU4g4Ad6J-sMqE08JVi_jNs
 
 ### UPDATE USER
-PUT http://localhost:3000/users/10
+PUT http://localhost:3000/users/13
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTAyNTg2OX0.4I-vg4TpdreIK5CeEoQC4eyuhWNQyCLeW8Nfxg5FpP4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODc0MH0.9Etc0uPQoInz14lhgCroSbJAhY4bm3WpEaKZs9rmjPI
 
 {
     "fullname": "admin",
@@ -48,9 +48,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsI
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/46
+DELETE http://localhost:3000/users/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODU2N30.ZZ2Crbf96w0JFpzzkMVjFwhY8LEYZtZ7XX-I5ZlKBM4
 
 
 ################################ VEHICLE ################################
