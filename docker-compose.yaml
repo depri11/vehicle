@@ -1,0 +1,22 @@
+version: '3'
+services:
+    db-postgres:
+        image: postgres
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=123
+            - POSTGRES_DB=vehicle
+    rest-api:
+        build: .
+        ports:
+            - 8000:8000
+        environment:
+            - DB_USER=postgres
+            - DB_PASSWORD=123
+            - DB_HOST=db-postgres
+            - DB_PORT=5432
+            - DB_DATABASE=vehicle
+        depends_on:
+            - postgres
