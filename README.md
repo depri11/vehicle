@@ -10,7 +10,7 @@ This is simple restful api crud with Golang
   go get -u github.com/gorilla/mux
 ```
 
-#### Gorm and Driver Postgres (i'm using postgres)
+#### Gorm and Driver Postgres
 
 ```
   go get -u gorm.io/gorm
@@ -22,7 +22,7 @@ This is simple restful api crud with Golang
 #### type command below.
 
 ```
-  go run main.go
+  go run main.go serve
 ```
 
 ## End Point
