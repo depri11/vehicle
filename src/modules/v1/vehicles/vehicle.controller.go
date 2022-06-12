@@ -13,39 +13,22 @@ import (
 )
 
 type controller struct {
-	repository Repository
+	service Service
 }
 
-func NewController(repository Repository) *controller {
-	return &controller{repository}
+func NewController(service Service) *controller {
+	return &controller{service}
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	result, err := c.repository.FindAll()
+	result, err := c.service.FindAll()
 	if err != nil {
 		res := helper.ResponseJSON("Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
 		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
-}
-
-func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
-	var vehicle Vehicle
-	json.NewDecoder(r.Body).Decode(&vehicle)
-
-	result, err := c.repository.Save(&vehicle)
-	if err != nil {
-		res := helper.ResponseJSON("Failed create Vehicle", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
-		return
-	}
-
-	res := helper.ResponseJSON("Successfully created Vehicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
-
+	json.NewEncoder(w).Encode(result)
 }
 
 func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
@@ -55,15 +38,27 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error")
 	}
 
-	result, err := c.repository.GetID(param)
+	result, err := c.service.FindByID(param)
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	json.NewEncoder(w).Encode(result)
+
+}
+
+func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
+	var vehicle Vehicle
+	json.NewDecoder(r.Body).Decode(&vehicle)
+
+	res, err := c.service.Create(&vehicle)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	res.Send(w)
 
 }
 
@@ -71,108 +66,85 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, "internal server error", http.StatusInternalServerError)
 		return
 	}
 
-	vehicle, err := c.repository.GetID(id)
+	var inputData VehicleInput
+
+	json.NewDecoder(r.Body).Decode(&inputData)
+
+	result, err := c.service.Update(id, &inputData)
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, "fail update data", http.StatusBadRequest)
 		return
 	}
 
-	json.NewDecoder(r.Body).Decode(&vehicle)
-
-	result, err := c.repository.Update(vehicle)
-	if err != nil {
-		res := helper.ResponseJSON("Failed update Vehicle", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
-		return
-	}
-
-	res := helper.ResponseJSON("Successfully updated Vhicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
-
+	result.Send(w)
 }
 
 func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
+
 	id, err := strconv.Atoi(params)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	_, err = c.repository.GetID(id)
+	res, err := c.service.Delete(id)
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Vehicle", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	err = c.repository.Delete(id)
-	if err != nil {
-		res := helper.ResponseJSON("Failed deleted Vehicle", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
-		return
-	}
+	res.Send(w)
 
-	res := helper.ResponseJSON("Successfully deleted Vehicle", http.StatusOK, "success", nil)
-	json.NewEncoder(w).Encode(res)
 }
 
 func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
-	result, err := c.repository.Popular()
+	res, err := c.service.Popular()
 	if err != nil {
-		res := helper.ResponseJSON("Failed get popular Vehicle", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List popular Vehicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 }
 
 func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
 	search := r.URL.Query().Get("search")
 
-	string := strings.ToLower(search)
+	lowerSearch := strings.ToLower(search)
 
 	if search != "" {
-		result, err := c.repository.Search(string)
+		res, err := c.service.Search(lowerSearch)
 		if err != nil {
-			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
-			json.NewEncoder(w).Encode(res)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		res := helper.ResponseJSON("List data Search", http.StatusOK, "success", result)
-		json.NewEncoder(w).Encode(res)
+		res.Send(w)
 		return
 	}
 
 	if sort == "asc" {
-		result, err := c.repository.Query(sort)
+		res, err := c.service.Sort(sort)
 		if err != nil {
-			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
-			json.NewEncoder(w).Encode(res)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		res := helper.ResponseJSON("List data Search", http.StatusOK, "success", result)
-		json.NewEncoder(w).Encode(res)
+		res.Send(w)
 		return
 	}
 
-	result, err := c.repository.FindAll()
+	result, err := c.service.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Vehicles", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Vehicle", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	result.Send(w)
 }

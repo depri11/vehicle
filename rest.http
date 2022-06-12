@@ -7,10 +7,10 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-    "fullname": "Devri",
-    "email": "devri@gmail.com",
-    "password": "123",
-    "phone": "0822",
+    "fullname": "devri",
+    "email": "dev@gmail.com",
+    "password": "123456",
+    "phone": "082255554551",
     "gender": "Male",
     "address": "Indonesia",
     "nickname": "Devri",
@@ -22,24 +22,25 @@ POST http://localhost:3000/auth/
 Content-Type: application/json
 
 {
-    "email": "devri@gmail.com",
+    "email": "dev@gmail.com",
     "password": "123"
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/36
+GET http://localhost:3000/users/42
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldnJpQGdtYWlsLmNvbSIsImV4cCI6MTY1NDgyOTczMH0.MNn5CVLPl3KS2nvOMdQJyDbUW8MVWNhJPnih4nwwc-w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiZXhwIjoxNjU0OTQ4Njg2fQ.eIjE9BR7aF3jqZAidu2xWU4g4Ad6J-sMqE08JVi_jNs
 
 ### UPDATE USER
-POST http://localhost:3000/users/26
+PUT http://localhost:3000/users/10
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTAyNTg2OX0.4I-vg4TpdreIK5CeEoQC4eyuhWNQyCLeW8Nfxg5FpP4
 
 {
-    "fullname": "Devri 22",
-    "email": "dv@gmail.com",
-    "password": "123",
-    "phone": "0822",
+    "fullname": "admin",
+    "email": "admin@admin.com",
+    "password": "123452",
+    "phone": "082255554554",
     "gender": "Male",
     "address": "Indonesia",
     "nickname": "Devri",
@@ -47,8 +48,9 @@ Content-Type: application/json
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/26
+DELETE http://localhost:3000/users/46
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
 
 
 ################################ VEHICLE ################################
@@ -58,6 +60,7 @@ Content-Type: application/json
 ### CREATE VEHICLE
 POST http://localhost:3000/vehicle/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
 
 {
     "name": "Sepeda",
@@ -73,12 +76,13 @@ Content-Type: application/json
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/24
+GET http://localhost:3000/vehicle/2
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-PUT http://localhost:3000/vehicle/77
+PUT http://localhost:3000/vehicle/25
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
 
 {
     "name": "Sepeda update",
@@ -94,19 +98,20 @@ Content-Type: application/json
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/24
+DELETE http://localhost:3000/vehicle/25
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
 
 ### POPULAR VEHICLE
 GET http://localhost:3000/vehicle/popular
 Content-Type: application/json
 
 ### QUERY
-GET http://localhost:3000/vehicle/all?sort=desc&search=e
+GET http://localhost:3000/vehicle/all?search=mo&sort=asc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/vehicle/all?search=e
+GET http://localhost:3000/vehicle/all?search=mo
 Content-Type: application/json
 
 ################################ HISTORY ################################

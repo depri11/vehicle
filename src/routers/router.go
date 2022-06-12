@@ -3,7 +3,7 @@ package routers
 import (
 	"errors"
 
-	"github.com/depri11/vehicle/src/configs/database"
+	"github.com/depri11/vehicle/src/database"
 	"github.com/depri11/vehicle/src/modules/v1/auth"
 	"github.com/depri11/vehicle/src/modules/v1/history"
 	"github.com/depri11/vehicle/src/modules/v1/users"

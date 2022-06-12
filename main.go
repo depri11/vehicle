@@ -1,25 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
 	"os"
 
-	"github.com/depri11/vehicle/src/routers"
+	"github.com/depri11/vehicle/src/configs/command"
 )
 
 func main() {
-	mux, err := routers.SetupRouter()
-	if err != nil {
+	if err := command.Run(os.Args[1:]); err != nil {
 		log.Fatal(err)
 	}
-
-	port := os.Getenv("PORT")
-
-	fmt.Println("Running on port", port)
-	if err := http.ListenAndServe(port, mux); err != nil {
-		log.Fatal("Failed running server")
-	}
-
 }

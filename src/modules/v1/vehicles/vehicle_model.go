@@ -31,3 +31,15 @@ type VehicleImage struct {
 }
 
 type VehicleImages []VehicleImage
+
+type VehicleInput struct {
+	Name        string `json:"name"`
+	City        string `json:"city"`
+	Available   bool   `json:"available"`
+	Prepayment  bool   `json:"prepayment"`
+	Capacity    int    `json:"capacity"`
+	Type        string `json:"type"`
+	Reservation string `json:"reservation"`
+	Price       string `json:"price"`
+	Quantity    int    `json:"quantity"`
+}

@@ -13,7 +13,7 @@ type Repository interface {
 	Update(vehicle *Vehicle) (*Vehicle, error)
 	Delete(ID int) error
 	Popular() (*Vehicles, error)
-	Query(sort string) (*Vehicles, error)
+	Sort(sort string) (*Vehicles, error)
 	Search(search string) (*Vehicles, error)
 }
 
@@ -84,7 +84,7 @@ func (r *repository) Popular() (*Vehicles, error) {
 	return &vehicle, nil
 }
 
-func (r *repository) Query(sort string) (*Vehicles, error) {
+func (r *repository) Sort(sort string) (*Vehicles, error) {
 	var vehicle Vehicles
 	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
 	if err != nil {
