@@ -116,20 +116,3 @@ func (r *service) UpdateUser(id int, user *UserInput) (*helper.Res, error) {
 	return response, nil
 
 }
-
-// func (r *service) UpdateUser(id int) (*helper.Res, error) {
-// 	var data User
-// 	user, err := r.repository.GetUserID(id)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	result, err := r.repository.Update(user)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	result.Password = ""
-
-// 	response := helper.ResponseJSON("Success", 200, "OK", result)
-// 	return response, nil
-// }

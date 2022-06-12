@@ -7,14 +7,14 @@ import (
 type User struct {
 	// gorm.Model
 	ID        uint      `gorm:"primaryKey" json:"id"`
-	Fullname  string    `json:"fullname"`
-	Email     string    `json:"email"`
-	Password  string    `json:"password,omitempty"`
-	Phone     string    `json:"phone"`
-	Gender    string    `json:"gender"`
-	Address   string    `json:"address"`
-	Nickname  string    `json:"nickname"`
-	Birthday  string    `json:"birthday"`
+	Fullname  string    `json:"fullname" validate:"required"`
+	Email     string    `json:"email" validate:"email"`
+	Password  string    `json:"password,omitempty" validate:"required,min=6"`
+	Phone     string    `json:"phone" validate:"required,min=12"`
+	Gender    string    `json:"gender" validate:"required"`
+	Address   string    `json:"address" validate:"required"`
+	Nickname  string    `json:"nickname" validate:"required"`
+	Birthday  string    `json:"birthday" validate:"required"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -22,12 +22,12 @@ type User struct {
 type Users []User
 
 type UserInput struct {
-	Fullname string `json:"fullname"`
-	Email    string `json:"email"`
-	Password string `json:"password,omitempty"`
-	Phone    string `json:"phone"`
-	Gender   string `json:"gender"`
-	Address  string `json:"address"`
-	Nickname string `json:"nickname"`
-	Birthday string `json:"birthday"`
+	Fullname string `json:"fullname" validate:"required"`
+	Email    string `json:"email" validate:"email"`
+	Password string `json:"password,omitempty" validate:"required,min=6"`
+	Phone    string `json:"phone" validate:"required,min=12"`
+	Gender   string `json:"gender" validate:"required"`
+	Address  string `json:"address" validate:"required"`
+	Nickname string `json:"nickname" validate:"required"`
+	Birthday string `json:"birthday" validate:"required"`
 }

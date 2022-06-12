@@ -24,7 +24,8 @@ func NewRepository(db *gorm.DB) Repository {
 func (r *repository) FindAll() (*Users, error) {
 	var users Users
 
-	err := r.db.Order("id desc").Preload("Historys").Find(&users).Error
+	err := r.db.Order("id desc").Find(&users).Error
+	// err := r.db.Order("id desc").Preload("Historys").Find(&users).Error
 
 	if err != nil {
 		return nil, err

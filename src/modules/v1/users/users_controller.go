@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/depri11/vehicle/src/helper"
 	"github.com/gorilla/mux"
 )
 
@@ -37,6 +38,12 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	json.NewDecoder(r.Body).Decode(&user)
+
+	err := helper.ValidationError(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	res, err := c.service.RegisterUser(&user)
 	if err != nil {
@@ -81,6 +88,14 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&inputData)
 
+	fmt.Println(inputData.Password)
+
+	err = helper.ValidationError(inputData)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
 	result, err := c.service.UpdateUser(id, &inputData)
 	if err != nil {
 		http.Error(w, "fail update data", http.StatusBadRequest)
@@ -92,7 +107,12 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
-	// reqUserId := r.Header.Get("user_id")
+	reqUserId := r.Header.Get("user_id")
+	if reqUserId != params {
+		http.Error(w, "access danied", http.StatusBadRequest)
+		return
+	}
+
 	id, err := strconv.Atoi(params)
 	if err != nil {
 		log.Fatal(err)
