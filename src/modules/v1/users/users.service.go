@@ -91,6 +91,7 @@ func (r *service) UpdateUser(id int, user *User) (*helper.Res, error) {
 	if err != nil {
 		return nil, err
 	}
+	
 	data.Fullname = user.Fullname
 	data.Address = user.Address
 	data.Birthday = user.Birthday

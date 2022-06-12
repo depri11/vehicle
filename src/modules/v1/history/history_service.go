@@ -1,16 +1,13 @@
-package vehicle
+package history
 
-import (
-	"github.com/depri11/vehicle/src/helper"
-)
+import "github.com/depri11/vehicle/src/helper"
 
 type Service interface {
 	FindAll() (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
-	Create(user *Vehicle) (*helper.Res, error)
-	Update(id int, vehicle *Vehicle) (*helper.Res, error)
+	Create(user *Historys) (*helper.Res, error)
+	Update(id int, vehicle *Historys) (*helper.Res, error)
 	Delete(id int) (*helper.Res, error)
-	Popular() (*helper.Res, error)
 	Sort(sort string) (*helper.Res, error)
 	Search(search string) (*helper.Res, error)
 }
@@ -43,8 +40,8 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Create(vehicle *Vehicle) (*helper.Res, error) {
-	data, err := s.repository.Save(vehicle)
+func (s *service) Create(history *Historys) (*helper.Res, error) {
+	data, err := s.repository.Save(history)
 	if err != nil {
 		return nil, err
 	}
@@ -53,21 +50,17 @@ func (s *service) Create(vehicle *Vehicle) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Update(id int, vehicle *Vehicle) (*helper.Res, error) {
+func (s *service) Update(id int, history *Historys) (*helper.Res, error) {
 	data, err := s.repository.GetID(id)
 	if err != nil {
 		return nil, err
 	}
 
-	data.Name = vehicle.Name
-	data.City = vehicle.City
-	data.Available = vehicle.Available
-	data.Prepayment = vehicle.Prepayment
-	data.Capacity = vehicle.Capacity
-	data.Type = vehicle.Type
-	data.Reservation = vehicle.Reservation
-	data.Price = vehicle.Price
-	data.Quantity = vehicle.Quantity
+	data.UserID = history.ID
+	data.Name = history.Name
+	data.Duration = history.Duration
+	data.Prepayment = history.Prepayment
+	data.Returned = history.Returned
 
 	res, err := s.repository.Update(data)
 	if err != nil {
@@ -90,16 +83,6 @@ func (s *service) Delete(id int) (*helper.Res, error) {
 	}
 
 	response := helper.ResponseJSON("Success", 200, "OK", nil)
-	return response, nil
-}
-
-func (s *service) Popular() (*helper.Res, error) {
-	vehicles, err := s.repository.Popular()
-	if err != nil {
-		return nil, err
-	}
-
-	response := helper.ResponseJSON("success", 200, "OK", vehicles)
 	return response, nil
 }
 

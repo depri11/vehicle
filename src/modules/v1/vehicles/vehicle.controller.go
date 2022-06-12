@@ -21,17 +21,20 @@ func NewController(service Service) *controller {
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	result, err := c.service.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Vehicle", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	json.NewEncoder(w).Encode(result)
+	result.Send(w)
 }
 
 func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
@@ -49,8 +52,16 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var vehicle Vehicle
 	json.NewDecoder(r.Body).Decode(&vehicle)
+
+	err := helper.ValidationError(vehicle)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	res, err := c.service.Create(&vehicle)
 	if err != nil {
@@ -63,20 +74,28 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		http.Error(w, "internal server error", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	var inputData VehicleInput
+	var vehicle Vehicle
 
-	json.NewDecoder(r.Body).Decode(&inputData)
+	json.NewDecoder(r.Body).Decode(&vehicle)
 
-	result, err := c.service.Update(id, &inputData)
+	err = helper.ValidationError(vehicle)
 	if err != nil {
-		http.Error(w, "fail update data", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	result, err := c.service.Update(id, &vehicle)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -84,6 +103,8 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 
 	id, err := strconv.Atoi(params)
@@ -103,6 +124,8 @@ func (c *controller) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	res, err := c.service.Popular()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -113,6 +136,8 @@ func (c *controller) PopularVehicle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	sort := r.URL.Query().Get("sort")
 	search := r.URL.Query().Get("search")
 

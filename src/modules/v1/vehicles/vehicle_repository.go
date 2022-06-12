@@ -28,7 +28,7 @@ func NewRepository(db *gorm.DB) Repository {
 func (r *repository) FindAll() (*Vehicles, error) {
 	var vehicles Vehicles
 
-	err := r.db.Order("id desc").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicles).Error
+	err := r.db.Order("id desc").Preload("Images", "vehicle_images.is_primary = true").Find(&vehicles).Error
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (r *repository) Save(vehicle *Vehicle) (*Vehicle, error) {
 
 func (r *repository) GetID(ID int) (*Vehicle, error) {
 	var vehicle Vehicle
-	err := r.db.Preload("Images", "vehicle_images.is_primary = 1").First(&vehicle, ID).Error
+	err := r.db.Preload("Images", "vehicle_images.is_primary = true").First(&vehicle, ID).Error
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (r *repository) Delete(ID int) error {
 
 func (r *repository) Popular() (*Vehicles, error) {
 	var vehicle Vehicles
-	err := r.db.Order("likes desc").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
+	err := r.db.Order("likes desc").Preload("Images", "vehicle_images.is_primary = true").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (r *repository) Popular() (*Vehicles, error) {
 
 func (r *repository) Sort(sort string) (*Vehicles, error) {
 	var vehicle Vehicles
-	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
+	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("Images", "vehicle_images.is_primary = true").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (r *repository) Sort(sort string) (*Vehicles, error) {
 
 func (r *repository) Search(search string) (*Vehicles, error) {
 	var vehicle Vehicles
-	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("Images", "vehicle_images.is_primary = 1").Find(&vehicle).Error
+	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("Images", "vehicle_images.is_primary = true").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}

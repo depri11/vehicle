@@ -27,9 +27,9 @@ Content-Type: application/json
 }
 
 ### GET USER BY ID
-GET http://localhost:3000/users/42
+GET http://localhost:3000/users/13
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiZXhwIjoxNjU0OTQ4Njg2fQ.eIjE9BR7aF3jqZAidu2xWU4g4Ad6J-sMqE08JVi_jNs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MTIwNX0.aMzHFMRLjiWcB-gH5zo_NCuXFIh9SMWEr1cg_aVhYng
 
 ### UPDATE USER
 PUT http://localhost:3000/users/13
@@ -48,9 +48,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsI
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/
+DELETE http://localhost:3000/users/14
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODU2N30.ZZ2Crbf96w0JFpzzkMVjFwhY8LEYZtZ7XX-I5ZlKBM4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MTIwNX0.aMzHFMRLjiWcB-gH5zo_NCuXFIh9SMWEr1cg_aVhYng
 
 
 ################################ VEHICLE ################################
@@ -60,10 +60,10 @@ Content-Type: application/json
 ### CREATE VEHICLE
 POST http://localhost:3000/vehicle/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODc0MH0.9Etc0uPQoInz14lhgCroSbJAhY4bm3WpEaKZs9rmjPI
 
 {
-    "name": "Sepeda",
+    "name": "Mobil",
     "city": "Indonesia",
     "available": true,
     "prepayment": false,
@@ -76,17 +76,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsI
 }
 
 ### GET VEHICLE BY ID
-GET http://localhost:3000/vehicle/2
+GET http://localhost:3000/vehicle/
 Content-Type: application/json
 
 ### UPDATE VEHICLE
-PUT http://localhost:3000/vehicle/25
+PUT http://localhost:3000/vehicle/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODc0MH0.9Etc0uPQoInz14lhgCroSbJAhY4bm3WpEaKZs9rmjPI
 
 {
-    "name": "Sepeda update",
-    "city": "city",
+    "name": "Mobil",
+    "city": "Indonesia",
     "available": true,
     "prepayment": false,
     "capacity": 2,
@@ -98,16 +98,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsI
 }
 
 ### DELETE VEHICLE
-DELETE http://localhost:3000/vehicle/25
+DELETE http://localhost:3000/vehicle/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDYsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NDk0OTA0Mn0.k9Xe428bA-GVEmV-UwW-HIhiBf4HfJQvYvKhIcpm3mI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODc0MH0.9Etc0uPQoInz14lhgCroSbJAhY4bm3WpEaKZs9rmjPI
 
 ### POPULAR VEHICLE
 GET http://localhost:3000/vehicle/popular
 Content-Type: application/json
 
-### QUERY
-GET http://localhost:3000/vehicle/all?search=mo&sort=asc
+### SORT
+GET http://localhost:3000/vehicle/all?sort=asc
 Content-Type: application/json
 
 ### SEARCH
@@ -123,15 +123,15 @@ POST http://localhost:3000/history/
 Content-Type: application/json
 
 {
-    "name": "Sepeda",
+    "name": "",
     "Duration": "2 Day",
     "prepayment": "Rp200.000",
     "returned": false,
-    "user_id": 26
+    "user_id": 13
 }
 
 ### QUERY
-GET http://localhost:3000/history/all?sort=asc
+GET http://localhost:3000/history/all?sort=desc
 Content-Type: application/json
 
 ### SEARCH
@@ -139,9 +139,10 @@ GET http://localhost:3000/history/all?search=m
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/21
+GET http://localhost:3000/history/9
 Content-Type: application/json
 
 ### DELETE HISTORY ID
-DELETE http://localhost:3000/history/21
+DELETE http://localhost:3000/history/9
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MjI1Nn0.epCnRbwBIV1ElSgsShqetgLTN4GKTA114XKWKlmEuyg

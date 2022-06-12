@@ -12,7 +12,7 @@ type Repository interface {
 	Save(history *Historys) (*Historys, error)
 	Update(history *Historys) (*Historys, error)
 	Delete(ID int) error
-	Query(sort string) (*Historyss, error)
+	Sort(sort string) (*Historyss, error)
 	Search(search string) (*Historyss, error)
 }
 
@@ -72,7 +72,7 @@ func (r *repository) Delete(ID int) error {
 	return nil
 }
 
-func (r *repository) Query(sort string) (*Historyss, error) {
+func (r *repository) Sort(sort string) (*Historyss, error) {
 	var historys Historyss
 
 	err := r.db.Order(fmt.Sprintf("id %v", sort)).Preload("User").Find(&historys).Error

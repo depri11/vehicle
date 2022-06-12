@@ -36,7 +36,6 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var user User
-
 	json.NewDecoder(r.Body).Decode(&user)
 
 	err := helper.ValidationError(user)
@@ -55,6 +54,8 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
@@ -71,6 +72,8 @@ func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	reqUserId := r.Header.Get("user_id")
 	if reqUserId != params {
@@ -104,6 +107,8 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	reqUserId := r.Header.Get("user_id")
 	if reqUserId != params {

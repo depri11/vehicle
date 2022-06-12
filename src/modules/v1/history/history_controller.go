@@ -2,8 +2,6 @@ package history
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,151 +11,155 @@ import (
 )
 
 type controller struct {
-	repository Repository
+	service Service
 }
 
-func NewController(repository Repository) *controller {
-	return &controller{repository}
+func NewController(service Service) *controller {
+	return &controller{service}
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	result, err := c.repository.FindAll()
+	w.Header().Set("Content-Type", "application/json")
+
+	res, err := c.service.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON("Failed to get Historys", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Historys", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 }
 
 func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
-		fmt.Println("error")
-	}
-
-	result, err := c.repository.GetID(param)
-	if err != nil {
-		res := helper.ResponseJSON("Failed get Historys", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List user data", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res, err := c.service.FindByID(param)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	res.Send(w)
 }
 
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var data Historys
 	json.NewDecoder(r.Body).Decode(&data)
 
-	result, err := c.repository.Save(&data)
+	res, err := c.service.Create(&data)
 	if err != nil {
-		res := helper.ResponseJSON("Failed create Historys", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("Successfully create History", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 }
 
 func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
+	reqUserId := r.Header.Get("user_id")
+	if reqUserId != params {
+		http.Error(w, "access danied", http.StatusBadRequest)
+		return
+	}
+
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	history, err := c.repository.GetID(id)
+	var data Historys
+
+	json.NewDecoder(r.Body).Decode(&data)
+
+	err = helper.ValidationError(data)
 	if err != nil {
-		res := helper.ResponseJSON("Failed get History", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	json.NewDecoder(r.Body).Decode(&history)
-
-	result, err := c.repository.Update(history)
+	res, err := c.service.Update(id, &data)
 	if err != nil {
-		res := helper.ResponseJSON("Failed update History", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, "access danied", http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("Successfully updated History", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 
 }
 
 func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
-		fmt.Println("error")
-	}
-
-	_, err = c.repository.GetID(param)
-	if err != nil {
-		res := helper.ResponseJSON("Failed get History", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, "access danied", http.StatusBadRequest)
 		return
 	}
 
-	err = c.repository.Delete(param)
-	if err != nil {
-		res := helper.ResponseJSON("Failed delete History", http.StatusBadRequest, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+	reqUserId := r.Header.Get("user_id")
+	if reqUserId != params {
+		http.Error(w, "access danied", http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("Successfully deleted History", http.StatusOK, "success", nil)
-	json.NewEncoder(w).Encode(res)
+	res, err := c.service.Delete(param)
+	if err != nil {
+		http.Error(w, "access danied", http.StatusBadRequest)
+		return
+	}
+
+	res.Send(w)
 }
 
-func (c *controller) QuerySort(w http.ResponseWriter, r *http.Request) {
+func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	sort := r.URL.Query().Get("sort")
 	search := r.URL.Query().Get("search")
 
 	string := strings.ToLower(search)
 
 	if search != "" {
-		result, err := c.repository.Search(string)
+		res, err := c.service.Search(string)
 		if err != nil {
-			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
-			json.NewEncoder(w).Encode(res)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		res := helper.ResponseJSON("List search data", http.StatusOK, "success", result)
-		json.NewEncoder(w).Encode(res)
+		res.Send(w)
 		return
 	}
 
 	if sort == "asc" {
-		result, err := c.repository.Query(sort)
+		res, err := c.service.Sort(sort)
 		if err != nil {
-			res := helper.ResponseJSON("Internal Server Error", http.StatusInternalServerError, "error", err.Error())
-			json.NewEncoder(w).Encode(res)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		res := helper.ResponseJSON("List sort data", http.StatusOK, "success", result)
-		json.NewEncoder(w).Encode(res)
+		res.Send(w)
 		return
 	}
 
-	result, err := c.repository.FindAll()
+	res, err := c.service.FindAll()
 	if err != nil {
-		res := helper.ResponseJSON("Failed get Historys", http.StatusNotFound, "error", err.Error())
-		json.NewEncoder(w).Encode(res)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res := helper.ResponseJSON("List of Historys", http.StatusOK, "success", result)
-	json.NewEncoder(w).Encode(res)
+	res.Send(w)
 }
