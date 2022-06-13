@@ -1,6 +1,10 @@
 package users
 
 import (
+	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/depri11/vehicle/src/helper"
 )
 
@@ -9,8 +13,8 @@ type Service interface {
 	FindByEmail(email string) (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
 	RegisterUser(user *User) (*helper.Res, error)
-	UpdateUser(id int, user *User) (*helper.Res, error)
-	Delete(id int) (*helper.Res, error)
+	UpdateUser(id int, user *User, r *http.Request) (*helper.Res, error)
+	Delete(id int, r *http.Request) (*helper.Res, error)
 }
 
 type service struct {
@@ -21,8 +25,8 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (r *service) FindAll() (*helper.Res, error) {
-	data, err := r.repository.FindAll()
+func (s *service) FindAll() (*helper.Res, error) {
+	data, err := s.repository.FindAll()
 	if err != nil {
 		return nil, err
 	}
@@ -31,8 +35,8 @@ func (r *service) FindAll() (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) FindByEmail(email string) (*helper.Res, error) {
-	data, err := r.repository.GetByEmail(email)
+func (s *service) FindByEmail(email string) (*helper.Res, error) {
+	data, err := s.repository.GetByEmail(email)
 	if err != nil {
 		return nil, err
 	}
@@ -41,8 +45,8 @@ func (r *service) FindByEmail(email string) (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) FindByID(id int) (*helper.Res, error) {
-	data, err := r.repository.GetUserID(id)
+func (s *service) FindByID(id int) (*helper.Res, error) {
+	data, err := s.repository.GetUserID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -71,13 +75,23 @@ func (r *service) RegisterUser(user *User) (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) Delete(id int) (*helper.Res, error) {
-	data, err := r.repository.GetUserID(id)
+func (s *service) Delete(id int, r *http.Request) (*helper.Res, error) {
+	data, err := s.repository.GetUserID(id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = r.repository.Delete(data.ID)
+	reqUserId := r.Header.Get("user_id")
+	setId, err := strconv.ParseUint(reqUserId, 0, 0)
+	if err != nil {
+		return nil, err
+	}
+
+	if uint(setId) != data.ID {
+		return nil, errors.New("access danied")
+	}
+
+	err = s.repository.Delete(data.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -86,12 +100,22 @@ func (r *service) Delete(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) UpdateUser(id int, user *User) (*helper.Res, error) {
-	data, err := r.repository.GetUserID(id)
+func (s *service) UpdateUser(id int, user *User, r *http.Request) (*helper.Res, error) {
+	data, err := s.repository.GetUserID(id)
 	if err != nil {
 		return nil, err
 	}
-	
+
+	reqUserId := r.Header.Get("user_id")
+	setId, err := strconv.ParseUint(reqUserId, 0, 0)
+	if err != nil {
+		return nil, err
+	}
+
+	if uint(setId) != data.ID {
+		return nil, errors.New("access danied")
+	}
+
 	data.Fullname = user.Fullname
 	data.Address = user.Address
 	data.Birthday = user.Birthday
@@ -107,7 +131,7 @@ func (r *service) UpdateUser(id int, user *User) (*helper.Res, error) {
 		data.Password = hashPass
 	}
 
-	res, err := r.repository.Update(data)
+	res, err := s.repository.Update(data)
 	data.Password = ""
 	if err != nil {
 		return nil, err

@@ -75,15 +75,10 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
-	reqUserId := r.Header.Get("user_id")
-	if reqUserId != params {
-		http.Error(w, "access danied", http.StatusBadRequest)
-		return
-	}
 
 	id, err := strconv.Atoi(params)
 	if err != nil {
-		http.Error(w, "internal server error", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -97,9 +92,9 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := c.service.UpdateUser(id, &inputData)
+	result, err := c.service.UpdateUser(id, &inputData, r)
 	if err != nil {
-		http.Error(w, "fail update data", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -110,11 +105,6 @@ func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
-	reqUserId := r.Header.Get("user_id")
-	if reqUserId != params {
-		http.Error(w, "access danied", http.StatusBadRequest)
-		return
-	}
 
 	id, err := strconv.Atoi(params)
 	if err != nil {
@@ -122,7 +112,7 @@ func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := c.service.Delete(id)
+	res, err := c.service.Delete(id, r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

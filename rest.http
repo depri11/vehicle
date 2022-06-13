@@ -32,12 +32,12 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MTIwNX0.aMzHFMRLjiWcB-gH5zo_NCuXFIh9SMWEr1cg_aVhYng
 
 ### UPDATE USER
-PUT http://localhost:3000/users/13
+PUT http://localhost:3000/users/17
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA2ODc0MH0.9Etc0uPQoInz14lhgCroSbJAhY4bm3WpEaKZs9rmjPI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTEwOTQ0MH0.n2G5q5xGkjS_023Sq7RKhu9cF4QiQgpAsgWAyRRPu8A
 
 {
-    "fullname": "admin",
+    "fullname": "admin2",
     "email": "admin@admin.com",
     "password": "123452",
     "phone": "082255554554",
@@ -48,9 +48,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsI
 }
 
 ### DELETE USER BY ID
-DELETE http://localhost:3000/users/14
+DELETE http://localhost:3000/users/16
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MTIwNX0.aMzHFMRLjiWcB-gH5zo_NCuXFIh9SMWEr1cg_aVhYng
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTEwOTQ0MH0.n2G5q5xGkjS_023Sq7RKhu9cF4QiQgpAsgWAyRRPu8A
 
 
 ################################ VEHICLE ################################

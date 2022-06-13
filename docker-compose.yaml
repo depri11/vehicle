@@ -11,12 +11,12 @@ services:
     rest-api:
         build: .
         ports:
-            - 8000:8000
+            - 8000:3000
         environment:
             - DB_USER=postgres
-            - DB_PASSWORD=123
+            - DB_PASS=123
             - DB_HOST=db-postgres
             - DB_PORT=5432
-            - DB_DATABASE=vehicle
+            - DB_NAME=vehicle
         depends_on:
             - postgres
