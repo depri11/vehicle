@@ -13,7 +13,7 @@ type Historys struct {
 	Duration   string      `json:"duration" validate:"required"`
 	Prepayment string      `json:"prepayment" validate:"required"`
 	Returned   bool        `json:"returned"`
-	User       *users.User `json:"user"`
+	User       *users.User `json:"user,omitempty" gorm:"foreignKey:UserID"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

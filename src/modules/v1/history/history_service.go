@@ -1,13 +1,19 @@
 package history
 
-import "github.com/depri11/vehicle/src/helper"
+import (
+	"errors"
+	"net/http"
+	"strconv"
+
+	"github.com/depri11/vehicle/src/helper"
+)
 
 type Service interface {
 	FindAll() (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
-	Create(user *Historys) (*helper.Res, error)
-	Update(id int, vehicle *Historys) (*helper.Res, error)
-	Delete(id int) (*helper.Res, error)
+	Create(user *Historys, r *http.Request) (*helper.Res, error)
+	Update(id int, vehicle *Historys, r *http.Request) (*helper.Res, error)
+	Delete(id int, r *http.Request) (*helper.Res, error)
 	Sort(sort string) (*helper.Res, error)
 	Search(search string) (*helper.Res, error)
 }
@@ -40,7 +46,15 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Create(history *Historys) (*helper.Res, error) {
+func (s *service) Create(history *Historys, r *http.Request) (*helper.Res, error) {
+	reqUserId := r.Header.Get("user_id")
+	setId, err := strconv.Atoi(reqUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	history.UserID = setId
+
 	data, err := s.repository.Save(history)
 	if err != nil {
 		return nil, err
@@ -50,9 +64,19 @@ func (s *service) Create(history *Historys) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Update(id int, history *Historys) (*helper.Res, error) {
+func (s *service) Update(id int, history *Historys, r *http.Request) (*helper.Res, error) {
 	data, err := s.repository.GetID(id)
 	if err != nil {
+		return nil, err
+	}
+
+	reqUserId := r.Header.Get("user_id")
+	setId, err := strconv.Atoi(reqUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	if setId != data.UserID {
 		return nil, err
 	}
 
@@ -71,12 +95,21 @@ func (s *service) Update(id int, history *Historys) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Delete(id int) (*helper.Res, error) {
-	_, err := s.repository.GetID(id)
+func (s *service) Delete(id int, r *http.Request) (*helper.Res, error) {
+	data, err := s.repository.GetID(id)
 	if err != nil {
 		return nil, err
 	}
 
+	reqUserId := r.Header.Get("user_id")
+	setId, err := strconv.Atoi(reqUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	if setId != data.UserID {
+		return nil, errors.New("access danied")
+	}
 	err = s.repository.Delete(id)
 	if err != nil {
 		return nil, err

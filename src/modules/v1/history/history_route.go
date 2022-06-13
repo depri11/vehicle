@@ -1,6 +1,7 @@
 package history
 
 import (
+	"github.com/depri11/vehicle/src/middleware"
 	"github.com/gorilla/mux"
 	"gorm.io/gorm"
 )
@@ -14,8 +15,8 @@ func NewRoute(mux *mux.Router, db *gorm.DB) {
 
 	r.HandleFunc("/", controller.GetAll).Methods("GET")
 	r.HandleFunc("/all", controller.Query).Methods("GET")
-	r.HandleFunc("/", controller.Create).Methods("POST")
-	r.HandleFunc("/{id}", controller.Update).Methods("PUT")
-	r.HandleFunc("/{id}", controller.GetHistorys).Methods("GET")
-	r.HandleFunc("/{id}", controller.DeleteHistory).Methods("DELETE")
+	r.HandleFunc("/", middleware.Do(controller.Create, middleware.CheckAuth)).Methods("POST")
+	r.HandleFunc("/{id}", middleware.Do(controller.Update, middleware.CheckAuth)).Methods("PUT")
+	r.HandleFunc("/{id}", middleware.Do(controller.GetHistorys, middleware.CheckAuth)).Methods("GET")
+	r.HandleFunc("/{id}", middleware.Do(controller.DeleteHistory, middleware.CheckAuth)).Methods("DELETE")
 }

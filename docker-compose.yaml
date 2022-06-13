@@ -1,17 +1,24 @@
 version: '3'
 services:
     db-postgres:
-        image: postgres
+        image: postgres:14-alpine
+        container_name: 'database'
         ports:
-            - 5432:5432
+            - '5432:5432'
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=123
             - POSTGRES_DB=vehicle
+        networks:
+            - vehicle-network
+        volumes:
+            - database_postgres:/var/lib/postgresql/data
+
     rest-api:
         build: .
+        container_name: 'rest-api'
         ports:
-            - 8000:3000
+            - 3000:3000
         environment:
             - DB_USER=postgres
             - DB_PASS=123
@@ -19,4 +26,13 @@ services:
             - DB_PORT=5432
             - DB_NAME=vehicle
         depends_on:
-            - postgres
+            - db-postgres
+        networks:
+            - vehicle-network
+
+volumes:
+    database_postgres:
+
+networks:
+    vehicle-network:
+        driver: bridge

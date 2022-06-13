@@ -22,7 +22,7 @@ POST http://localhost:3000/auth/
 Content-Type: application/json
 
 {
-    "email": "dev@gmail.com",
+    "email": "dev2@gmail.com",
     "password": "123456"
 }
 
@@ -121,28 +121,28 @@ Content-Type: application/json
 ### CREATE
 POST http://localhost:3000/history/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJkZXYyQGdtYWlsLmNvbSIsImV4cCI6MTY1NTEyNjYzN30.T6EGQTCptZxVmD_k4Cq9Hw0C94LDpHg1ONrDjoW9AO8
 
 {
-    "name": "",
+    "name": "fixie",
     "Duration": "2 Day",
     "prepayment": "Rp200.000",
-    "returned": false,
-    "user_id": 13
+    "returned": false
 }
 
 ### QUERY
-GET http://localhost:3000/history/all?sort=desc
+GET http://localhost:3000/history/all?sort=asc
 Content-Type: application/json
 
 ### SEARCH
-GET http://localhost:3000/history/all?search=m
+GET http://localhost:3000/history/all?search=e
 Content-Type: application/json
 
 ### GET HISTORY ID
-GET http://localhost:3000/history/9
+GET http://localhost:3000/history/1
 Content-Type: application/json
 
 ### DELETE HISTORY ID
-DELETE http://localhost:3000/history/9
+DELETE http://localhost:3000/history/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoiZGV2QGdtYWlsLmNvbSIsImV4cCI6MTY1NTA3MjI1Nn0.epCnRbwBIV1ElSgsShqetgLTN4GKTA114XKWKlmEuyg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZXZAZ21haWwuY29tIiwiZXhwIjoxNjU1MTI2NTk4fQ.oA0RVWT0dB4ssXh-amXNm-9hBFmMy3D8ftx2Vbohnes

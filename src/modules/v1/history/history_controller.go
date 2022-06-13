@@ -55,7 +55,7 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 	var data Historys
 	json.NewDecoder(r.Body).Decode(&data)
 
-	res, err := c.service.Create(&data)
+	res, err := c.service.Create(&data, r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -68,11 +68,6 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
-	reqUserId := r.Header.Get("user_id")
-	if reqUserId != params {
-		http.Error(w, "access danied", http.StatusBadRequest)
-		return
-	}
 
 	id, err := strconv.Atoi(params)
 	if err != nil {
@@ -90,7 +85,7 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := c.service.Update(id, &data)
+	res, err := c.service.Update(id, &data, r)
 	if err != nil {
 		http.Error(w, "access danied", http.StatusBadRequest)
 		return
@@ -106,19 +101,13 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
-		http.Error(w, "access danied", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	reqUserId := r.Header.Get("user_id")
-	if reqUserId != params {
-		http.Error(w, "access danied", http.StatusBadRequest)
-		return
-	}
-
-	res, err := c.service.Delete(param)
+	res, err := c.service.Delete(param, r)
 	if err != nil {
-		http.Error(w, "access danied", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
