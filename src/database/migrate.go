@@ -36,10 +36,10 @@ func dbMigrate(cmd *cobra.Command, args []string) error {
 			ID: "001",
 			Migrate: func(tx *gorm.DB) error {
 
-				return tx.AutoMigrate(&users.User{})
+				return tx.AutoMigrate(&users.User{}, &history.Historys{}, &vehicle.Vehicle{}, &vehicle.VehicleImage{})
 			},
 			Rollback: func(tx *gorm.DB) error {
-				return tx.Migrator().DropTable("people")
+				return tx.Migrator().DropTable(&users.User{}, &history.Historys{}, &vehicle.Vehicle{}, "vehicle_images")
 			},
 		},
 	})

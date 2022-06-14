@@ -6,8 +6,4 @@ COPY . .
 
 RUN go build -o rest-api
 
-# RUN ./ migrate
-
-# CMD ["./rest-api"]
-
-CMD ["./rest-api", "migrate"]
+CMD ["./rest-api", "serve"]
