@@ -7,15 +7,17 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
 type controller struct {
-	service Service
+	service interfaces.UserService
 }
 
-func NewController(service Service) *controller {
+func NewController(service interfaces.UserService) *controller {
 	return &controller{service}
 }
 
@@ -35,7 +37,7 @@ func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var user User
+	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
 
 	err := helper.ValidationError(user)
@@ -82,7 +84,7 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var inputData User
+	var inputData models.User
 
 	json.NewDecoder(r.Body).Decode(&inputData)
 

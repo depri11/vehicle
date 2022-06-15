@@ -5,14 +5,15 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
 )
 
 type Service interface {
 	FindAll() (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
-	Create(user *Historys, r *http.Request) (*helper.Res, error)
-	Update(id int, vehicle *Historys, r *http.Request) (*helper.Res, error)
+	Create(user *models.Historys, r *http.Request) (*helper.Res, error)
+	Update(id int, vehicle *models.Historys, r *http.Request) (*helper.Res, error)
 	Delete(id int, r *http.Request) (*helper.Res, error)
 	Sort(sort string) (*helper.Res, error)
 	Search(search string) (*helper.Res, error)
@@ -46,7 +47,7 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Create(history *Historys, r *http.Request) (*helper.Res, error) {
+func (s *service) Create(history *models.Historys, r *http.Request) (*helper.Res, error) {
 	reqUserId := r.Header.Get("user_id")
 	setId, err := strconv.Atoi(reqUserId)
 	if err != nil {
@@ -64,7 +65,7 @@ func (s *service) Create(history *Historys, r *http.Request) (*helper.Res, error
 	return response, nil
 }
 
-func (s *service) Update(id int, history *Historys, r *http.Request) (*helper.Res, error) {
+func (s *service) Update(id int, history *models.Historys, r *http.Request) (*helper.Res, error) {
 	data, err := s.repository.GetID(id)
 	if err != nil {
 		return nil, err

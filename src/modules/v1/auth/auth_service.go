@@ -1,8 +1,9 @@
 package auth
 
 import (
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
-	"github.com/depri11/vehicle/src/modules/v1/users"
+	"github.com/depri11/vehicle/src/interfaces"
 )
 
 type tokenResponse struct {
@@ -10,18 +11,18 @@ type tokenResponse struct {
 }
 
 type Service interface {
-	Login(user users.User) *helper.Res
+	Login(user models.User) *helper.Res
 }
 
 type service struct {
-	auth users.Repository
+	auth interfaces.UserRepository
 }
 
-func NewService(auth users.Repository) *service {
+func NewService(auth interfaces.UserRepository) *service {
 	return &service{auth}
 }
 
-func (s *service) Login(user users.User) *helper.Res {
+func (s *service) Login(user models.User) *helper.Res {
 	data, err := s.auth.GetByEmail(user.Email)
 	if err != nil {
 		response := helper.ResponseJSON("email your incorrect", 401, "Bad Request", nil)

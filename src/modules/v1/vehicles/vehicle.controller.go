@@ -8,15 +8,17 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
 type controller struct {
-	service Service
+	service interfaces.VehicleService
 }
 
-func NewController(service Service) *controller {
+func NewController(service interfaces.VehicleService) *controller {
 	return &controller{service}
 }
 
@@ -54,7 +56,7 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var vehicle Vehicle
+	var vehicle models.Vehicle
 	json.NewDecoder(r.Body).Decode(&vehicle)
 
 	err := helper.ValidationError(vehicle)
@@ -83,7 +85,7 @@ func (c *controller) UpdateVehicle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var vehicle Vehicle
+	var vehicle models.Vehicle
 
 	json.NewDecoder(r.Body).Decode(&vehicle)
 

@@ -7,9 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/depri11/vehicle/src/modules/v1/history"
-	"github.com/depri11/vehicle/src/modules/v1/users"
-	vehicle "github.com/depri11/vehicle/src/modules/v1/vehicles"
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -41,7 +39,7 @@ func SetupDB() (*gorm.DB, error) {
 	}
 
 	if env == "development" {
-		db.AutoMigrate(&users.User{}, &history.Historys{}, &vehicle.Vehicle{}, &vehicle.VehicleImage{})
+		db.AutoMigrate(&models.User{}, &models.Historys{}, &models.Vehicle{}, &models.VehicleImage{})
 	}
 
 	dbLife.SetConnMaxIdleTime(10)

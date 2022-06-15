@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
 	"github.com/gorilla/mux"
 )
@@ -52,7 +53,7 @@ func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var data Historys
+	var data models.Historys
 	json.NewDecoder(r.Body).Decode(&data)
 
 	res, err := c.service.Create(&data, r)
@@ -75,7 +76,7 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data Historys
+	var data models.Historys
 
 	json.NewDecoder(r.Body).Decode(&data)
 

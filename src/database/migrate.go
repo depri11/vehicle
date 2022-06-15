@@ -3,9 +3,7 @@ package database
 import (
 	"log"
 
-	"github.com/depri11/vehicle/src/modules/v1/history"
-	"github.com/depri11/vehicle/src/modules/v1/users"
-	vehicle "github.com/depri11/vehicle/src/modules/v1/vehicles"
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/go-gormigrate/gormigrate/v2"
 	"github.com/spf13/cobra"
 	"gorm.io/gorm"
@@ -36,10 +34,10 @@ func dbMigrate(cmd *cobra.Command, args []string) error {
 			ID: "001",
 			Migrate: func(tx *gorm.DB) error {
 
-				return tx.AutoMigrate(&users.User{}, &history.Historys{}, &vehicle.Vehicle{}, &vehicle.VehicleImage{})
+				return tx.AutoMigrate(&models.User{}, &models.Historys{}, &models.Vehicle{}, &models.VehicleImage{})
 			},
 			Rollback: func(tx *gorm.DB) error {
-				return tx.Migrator().DropTable(&users.User{}, &history.Historys{}, &vehicle.Vehicle{}, "vehicle_images")
+				return tx.Migrator().DropTable(&models.User{}, &models.Historys{}, &models.Vehicle{}, "vehicle_images")
 			},
 		},
 	})
@@ -62,10 +60,10 @@ func dbMigrate(cmd *cobra.Command, args []string) error {
 
 	m.InitSchema(func(tx *gorm.DB) error {
 		err := tx.AutoMigrate(
-			&users.User{},
-			&vehicle.Vehicle{},
-			&vehicle.VehicleImage{},
-			&history.Historys{},
+			&models.User{},
+			&models.Vehicle{},
+			&models.VehicleImage{},
+			&models.Historys{},
 		)
 		if err != nil {
 			return err

@@ -5,23 +5,16 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 )
 
-type Service interface {
-	FindAll() (*helper.Res, error)
-	FindByEmail(email string) (*helper.Res, error)
-	FindByID(id int) (*helper.Res, error)
-	RegisterUser(user *User) (*helper.Res, error)
-	UpdateUser(id int, user *User, r *http.Request) (*helper.Res, error)
-	Delete(id int, r *http.Request) (*helper.Res, error)
-}
-
 type service struct {
-	repository Repository
+	repository interfaces.UserRepository
 }
 
-func NewService(repository Repository) *service {
+func NewService(repository interfaces.UserRepository) *service {
 	return &service{repository}
 }
 
@@ -57,7 +50,7 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (r *service) RegisterUser(user *User) (*helper.Res, error) {
+func (r *service) RegisterUser(user *models.User) (*helper.Res, error) {
 	hashPass, err := helper.HashPassword(user.Password)
 	if err != nil {
 		return nil, err
@@ -100,7 +93,7 @@ func (s *service) Delete(id int, r *http.Request) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) UpdateUser(id int, user *User, r *http.Request) (*helper.Res, error) {
+func (s *service) UpdateUser(id int, user *models.User, r *http.Request) (*helper.Res, error) {
 	data, err := s.repository.GetUserID(id)
 	if err != nil {
 		return nil, err

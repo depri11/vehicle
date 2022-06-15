@@ -1,25 +1,16 @@
 package vehicle
 
 import (
+	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 )
 
-type Service interface {
-	FindAll() (*helper.Res, error)
-	FindByID(id int) (*helper.Res, error)
-	Create(user *Vehicle) (*helper.Res, error)
-	Update(id int, vehicle *Vehicle) (*helper.Res, error)
-	Delete(id int) (*helper.Res, error)
-	Popular() (*helper.Res, error)
-	Sort(sort string) (*helper.Res, error)
-	Search(search string) (*helper.Res, error)
-}
-
 type service struct {
-	repository Repository
+	repository interfaces.VehicleRepository
 }
 
-func NewService(repository Repository) *service {
+func NewService(repository interfaces.VehicleRepository) *service {
 	return &service{repository}
 }
 
@@ -43,7 +34,7 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Create(vehicle *Vehicle) (*helper.Res, error) {
+func (s *service) Create(vehicle *models.Vehicle) (*helper.Res, error) {
 	data, err := s.repository.Save(vehicle)
 	if err != nil {
 		return nil, err
@@ -53,7 +44,7 @@ func (s *service) Create(vehicle *Vehicle) (*helper.Res, error) {
 	return response, nil
 }
 
-func (s *service) Update(id int, vehicle *Vehicle) (*helper.Res, error) {
+func (s *service) Update(id int, vehicle *models.Vehicle) (*helper.Res, error) {
 	data, err := s.repository.GetID(id)
 	if err != nil {
 		return nil, err

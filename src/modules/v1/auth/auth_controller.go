@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/depri11/vehicle/src/modules/v1/users"
+	"github.com/depri11/vehicle/src/database/models"
 )
 
 type controller struct {
@@ -18,7 +18,7 @@ func NewController(service Service) *controller {
 func (c *controller) SignIn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var user users.User
+	var user models.User
 
 	json.NewDecoder(r.Body).Decode(&user)
 
