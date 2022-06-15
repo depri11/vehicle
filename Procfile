@@ -1,1 +1,1 @@
-web: bin/main serve
+web: vehicle
