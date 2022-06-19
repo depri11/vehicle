@@ -21,6 +21,7 @@ type Meta struct {
 func (r *Res) Send(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	err := json.NewEncoder(w).Encode(r)
 	if err != nil {
 		w.Write([]byte("Error When Encode respone"))
