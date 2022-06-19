@@ -16,13 +16,11 @@ func NewController(service Service) *controller {
 }
 
 func (c *controller) SignIn(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var user models.User
 
 	json.NewDecoder(r.Body).Decode(&user)
 
-	response := c.service.Login(user)
+	res := c.service.Login(user)
 
-	json.NewEncoder(w).Encode(response)
+	res.Send(w)
 }

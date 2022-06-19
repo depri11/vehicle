@@ -49,8 +49,7 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(result)
-
+	result.Send(w)
 }
 
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {

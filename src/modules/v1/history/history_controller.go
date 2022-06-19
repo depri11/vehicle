@@ -51,8 +51,6 @@ func (c *controller) GetHistorys(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var data models.Historys
 	json.NewDecoder(r.Body).Decode(&data)
 
@@ -66,8 +64,6 @@ func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	params := mux.Vars(r)["id"]
 
 	id, err := strconv.Atoi(params)
@@ -97,8 +93,6 @@ func (c *controller) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
 	if err != nil {
@@ -116,8 +110,6 @@ func (c *controller) DeleteHistory(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	sort := r.URL.Query().Get("sort")
 	search := r.URL.Query().Get("search")
 

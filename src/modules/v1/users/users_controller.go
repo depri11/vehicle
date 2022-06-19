@@ -22,8 +22,6 @@ func NewController(service interfaces.UserService) *controller {
 }
 
 func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	result, err := c.service.FindAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -35,8 +33,6 @@ func (c *controller) GetAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
 
@@ -56,7 +52,6 @@ func (c *controller) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
 	param, err := strconv.Atoi(params)
@@ -74,7 +69,6 @@ func (c *controller) GetUserID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
 
@@ -104,7 +98,6 @@ func (c *controller) UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)["id"]
 
@@ -121,5 +114,4 @@ func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res.Send(w)
-
 }
