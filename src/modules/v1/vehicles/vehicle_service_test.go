@@ -1,26 +1,26 @@
 package vehicle
 
-// import (
-// 	"testing"
+import (
+	"testing"
 
-// 	"github.com/depri11/vehicle/src/database/models"
-// 	"github.com/depri11/vehicle/src/modules/v1/vehicles/mocks"
-// 	"github.com/stretchr/testify/assert"
-// 	"github.com/stretchr/testify/mock"
-// )
+	"github.com/depri11/vehicle/src/database/models"
+	"github.com/depri11/vehicle/src/modules/v1/vehicles/mocks"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+)
 
-// var modelMock = models.Vehicle{
-// 	ID: 1,
-// }
+var modelMock = models.Vehicle{
+	ID: 1,
+}
 
-// // func TestFindById(t testing.T) {
-// // 	var repos = mocks.RepoMock{Mock: mock.Mock{}}
-// // 	var service = service{&repos}
+func TestGetID(t *testing.T) {
+	var repo = mocks.RepoMock{Mock: mock.Mock{}}
+	var service = service{&repo}
 
-// // 	repos.Mock.On("FindByUserId", 1).Return(modelMock, nil)
-// // 	data, err := service.FindByID(1)
+	repo.Mock.On("GetID", 1).Return(&modelMock, nil)
+	data, err := service.FindByID(1)
 
-// // 	orders := data.Data.(models.Vehicle)
-// // 	assert.Equal(t, 1, orders, "Expect id = 1")
-// // 	assert.Nil(t, err)
-// // }
+	vehicles := data.Data.(*models.Vehicle)
+	assert.Equal(t, 1, vehicles.ID, "Expect id = 1")
+	assert.Nil(t, err)
+}
