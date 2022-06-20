@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
@@ -114,4 +115,43 @@ func (c *controller) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res.Send(w)
+}
+
+func (c *controller) Query(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	sort := r.URL.Query().Get("sort")
+	search := r.URL.Query().Get("search")
+
+	lowerSearch := strings.ToLower(search)
+
+	if search != "" {
+		res, err := c.service.Search(lowerSearch)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		res.Send(w)
+		return
+	}
+
+	if sort == "asc" {
+		res, err := c.service.Sort(sort)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		res.Send(w)
+		return
+	}
+
+	result, err := c.service.FindAll()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	result.Send(w)
 }

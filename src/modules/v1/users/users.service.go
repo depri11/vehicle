@@ -57,6 +57,7 @@ func (r *service) RegisterUser(user *models.User) (*helper.Res, error) {
 	}
 
 	user.Password = hashPass
+	user.Role = "user"
 	data, err := r.repository.Save(user)
 	if err != nil {
 		return nil, err
@@ -133,4 +134,24 @@ func (s *service) UpdateUser(id int, user *models.User, r *http.Request) (*helpe
 	response := helper.ResponseJSON("Success", 200, "OK", res)
 	return response, nil
 
+}
+
+func (s *service) Sort(sort string) (*helper.Res, error) {
+	vehicles, err := s.repository.Sort(sort)
+	if err != nil {
+		return nil, err
+	}
+
+	response := helper.ResponseJSON("success", 200, "OK", vehicles)
+	return response, nil
+}
+
+func (s *service) Search(search string) (*helper.Res, error) {
+	vehicles, err := s.repository.Search(search)
+	if err != nil {
+		return nil, err
+	}
+
+	response := helper.ResponseJSON("success", 200, "OK", vehicles)
+	return response, nil
 }

@@ -15,6 +15,7 @@ type User struct {
 	Address   string    `json:"address" validate:"required"`
 	Nickname  string    `json:"nickname" validate:"required"`
 	Birthday  string    `json:"birthday" validate:"required"`
+	Role      string    `json:"role" validate:"required"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

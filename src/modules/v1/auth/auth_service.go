@@ -10,10 +10,6 @@ type tokenResponse struct {
 	Token string `json:"token"`
 }
 
-type Service interface {
-	Login(user models.User) *helper.Res
-}
-
 type service struct {
 	auth interfaces.UserRepository
 }
@@ -39,7 +35,7 @@ func (s *service) Login(user models.User) *helper.Res {
 		return response
 	}
 
-	token := helper.NewToken(int(data.ID), data.Email)
+	token := helper.NewToken(int(data.ID), data.Email, data.Role)
 	tokens, err := token.Create()
 	if err != nil {
 		response := helper.ResponseJSON("Internal Server Error", 500, "error", nil)

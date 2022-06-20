@@ -11,13 +11,15 @@ import (
 type claims struct {
 	Id    int    `json:"id"`
 	Email string `json:"email"`
+	Role  string `json:"role"`
 	jwt.StandardClaims
 }
 
-func NewToken(id int, email string) *claims {
+func NewToken(id int, email string, role string) *claims {
 	return &claims{
 		Id:    id,
 		Email: email,
+		Role:  role,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 5).Unix(),
 		},
@@ -47,21 +49,3 @@ func CheckToken(token string) (*claims, error) {
 
 	return claims, nil
 }
-
-// func CheckToken(token string) (bool, error) {
-// 	tokens, err := jwt.ParseWithClaims(token, &claims{}, func(t *jwt.Token) (interface{}, error) {
-// 		return []byte(os.Getenv("JWT_SECRET_KEY")), nil
-// 	})
-
-// 	if err != nil {
-// 		return false, err
-// 	}
-
-// 	// claims, ok := tokens.Claims.(*claims)
-
-// 	// if ok && tokens.Valid {
-// 	// 	return uint(claims.ID), nil
-// 	// }
-
-// 	return tokens.Valid, nil
-// }

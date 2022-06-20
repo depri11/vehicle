@@ -25,8 +25,9 @@ func NewRoute(r *mux.Router, db *gorm.DB) {
 	}
 
 	route.HandleFunc(newrelic.WrapHandleFunc(app, "/", controller.GetAll)).Methods("GET")
+	route.HandleFunc(newrelic.WrapHandleFunc(app, "/all", controller.Query)).Methods("GET")
 	route.HandleFunc("/", controller.Register).Methods("POST")
-	route.HandleFunc("/{id}", middleware.Do(controller.GetUserID, middleware.CheckAuth)).Methods("GET")
-	route.HandleFunc("/{id}", middleware.Do(controller.UpdateUser, middleware.CheckAuth)).Methods("PUT")
-	route.HandleFunc("/{id}", middleware.Do(controller.DeleteUser, middleware.CheckAuth)).Methods("DELETE")
+	route.HandleFunc("/{id}", middleware.Do(controller.GetUserID, middleware.CheckAuth, middleware.CheckRoleAdmin)).Methods("GET")
+	route.HandleFunc("/{id}", middleware.Do(controller.UpdateUser, middleware.CheckAuth, middleware.CheckRoleAdmin)).Methods("PUT")
+	route.HandleFunc("/{id}", middleware.Do(controller.DeleteUser, middleware.CheckAuth, middleware.CheckRoleAdmin)).Methods("DELETE")
 }

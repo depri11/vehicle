@@ -27,6 +27,19 @@ func CheckAuth(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		r.Header.Set("user_id", strconv.Itoa(checkToken.Id))
+		r.Header.Set("role", checkToken.Role)
+
+		next.ServeHTTP(w, r)
+	}
+}
+
+func CheckRoleAdmin(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		role := r.Header.Get("role")
+		if role != "admin" {
+			http.Error(w, "you are not admin", http.StatusUnauthorized)
+			return
+		}
 
 		next.ServeHTTP(w, r)
 	}

@@ -7,21 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type Repository interface {
-	FindAll() (*models.Historyss, error)
-	GetID(ID int) (*models.Historys, error)
-	Save(history *models.Historys) (*models.Historys, error)
-	Update(history *models.Historys) (*models.Historys, error)
-	Delete(ID int) error
-	Sort(sort string) (*models.Historyss, error)
-	Search(search string) (*models.Historyss, error)
-}
-
 type repository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) Repository {
+func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 

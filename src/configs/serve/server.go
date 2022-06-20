@@ -13,11 +13,11 @@ import (
 var ServeCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "start api server",
-	RunE:  serve,
+	RunE:  Serve,
 }
 var validate *validator.Validate
 
-func serve(cmd *cobra.Command, args []string) error {
+func Serve(cmd *cobra.Command, args []string) error {
 	if mainRoute, err := routers.SetupRouter(); err == nil {
 		var addrs string = "0.0.0.0:3000"
 

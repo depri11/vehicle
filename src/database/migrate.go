@@ -12,7 +12,7 @@ import (
 var MigrateCmd = &cobra.Command{
 	Use:   "migrate",
 	Short: "Migrate database",
-	RunE:  dbMigrate,
+	RunE:  DBMigrate,
 }
 
 var migUp bool
@@ -23,7 +23,7 @@ func init() {
 	MigrateCmd.Flags().BoolVarP(&migDown, "down", "d", false, "migrate down")
 }
 
-func dbMigrate(cmd *cobra.Command, args []string) error {
+func DBMigrate(cmd *cobra.Command, args []string) error {
 	db, err := SetupDB()
 	if err != nil {
 		return err

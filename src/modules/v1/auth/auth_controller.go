@@ -5,13 +5,14 @@ import (
 	"net/http"
 
 	"github.com/depri11/vehicle/src/database/models"
+	"github.com/depri11/vehicle/src/interfaces"
 )
 
 type controller struct {
-	service Service
+	service interfaces.AuthService
 }
 
-func NewController(service Service) *controller {
+func NewController(service interfaces.AuthService) *controller {
 	return &controller{service}
 }
 

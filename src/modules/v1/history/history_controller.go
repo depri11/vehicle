@@ -8,14 +8,15 @@ import (
 
 	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
 type controller struct {
-	service Service
+	service interfaces.HistoryService
 }
 
-func NewController(service Service) *controller {
+func NewController(service interfaces.HistoryService) *controller {
 	return &controller{service}
 }
 

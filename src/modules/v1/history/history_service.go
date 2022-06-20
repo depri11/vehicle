@@ -7,23 +7,14 @@ import (
 
 	"github.com/depri11/vehicle/src/database/models"
 	"github.com/depri11/vehicle/src/helper"
+	"github.com/depri11/vehicle/src/interfaces"
 )
 
-type Service interface {
-	FindAll() (*helper.Res, error)
-	FindByID(id int) (*helper.Res, error)
-	Create(user *models.Historys, r *http.Request) (*helper.Res, error)
-	Update(id int, vehicle *models.Historys, r *http.Request) (*helper.Res, error)
-	Delete(id int, r *http.Request) (*helper.Res, error)
-	Sort(sort string) (*helper.Res, error)
-	Search(search string) (*helper.Res, error)
-}
-
 type service struct {
-	repository Repository
+	repository interfaces.HistoryRepository
 }
 
-func NewService(repository Repository) *service {
+func NewService(repository interfaces.HistoryRepository) *service {
 	return &service{repository}
 }
 

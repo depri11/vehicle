@@ -85,12 +85,12 @@ func (r *repository) Sort(sort string) (*models.Vehicles, error) {
 }
 
 func (r *repository) Search(search string) (*models.Vehicles, error) {
-	var vehicle models.Vehicles
+	var vehicle *models.Vehicles
 	err := r.db.Where("LOWER(name) LIKE ?", "%"+search+"%").Preload("Images", "vehicle_images.is_primary = true").Find(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &vehicle, nil
+	return vehicle, nil
 
 }

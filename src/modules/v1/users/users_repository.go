@@ -1,6 +1,8 @@
 package users
 
 import (
+	"fmt"
+
 	"github.com/depri11/vehicle/src/database/models"
 	"gorm.io/gorm"
 )
@@ -72,4 +74,25 @@ func (r *repository) Delete(ID uint) error {
 	}
 
 	return nil
+}
+
+func (r *repository) Sort(sort string) (*models.Users, error) {
+	var users models.Users
+	err := r.db.Order(fmt.Sprintf("id %v", sort)).Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &users, nil
+}
+
+func (r *repository) Search(search string) (*models.Users, error) {
+	var users *models.Users
+	err := r.db.Where("LOWER(fullname) LIKE ?", "%"+search+"%").Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+
 }

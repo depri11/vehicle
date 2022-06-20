@@ -2,6 +2,12 @@
 
 This is simple restful api crud with Golang
 
+## 🖥️ Tech Stack
+
+**Backend:**
+
+![golang](https://img.shields.io/badge/Go-100000?style=for-the-badge&logo=Go&logoColor=white&labelColor=51DEF0&color=white)&nbsp;
+
 ## Install Package
 
 #### Gorilla/mux
