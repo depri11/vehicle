@@ -6,7 +6,13 @@ This is simple restful api crud with Golang
 
 **Backend:**
 
-![golang](https://img.shields.io/badge/Go-100000?style=for-the-badge&logo=Go&logoColor=white&labelColor=51DEF0&color=white)&nbsp;
+![golang](https://img.shields.io/badge/Go-100000?style=for-the-badge&logo=Go&logoColor=white&labelColor=51DEF0&color=51DEF0)&nbsp;
+![postgresql](https://img.shields.io/badge/PostgreSQL-100000?style=for-the-badge&logo=PostgreSQL&logoColor=white&labelColor=3A7373&color=384A5F)&nbsp;
+![jwt](https://img.shields.io/badge/PostgreSQL-100000?style=for-the-badge&logo=JSON Web Tokens&logoColor=white&labelColor=000000&color=000000)&nbsp;
+
+**Deployed On:**
+
+![heroku](https://img.shields.io/badge/heroku-100000?style=for-the-badge&logo=Heroku&logoColor=white&labelColor=3C8932&color=3C8932)&nbsp;
 
 ## Install Package
 
