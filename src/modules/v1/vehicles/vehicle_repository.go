@@ -37,7 +37,7 @@ func (r *repository) Save(vehicle *models.Vehicle) (*models.Vehicle, error) {
 
 func (r *repository) GetID(ID int) (*models.Vehicle, error) {
 	var vehicle models.Vehicle
-	err := r.db.Preload("Images", "vehicle_images.is_primary = true").First(&vehicle, ID).Error
+	err := r.db.Preload("Images").First(&vehicle, ID).Error
 	if err != nil {
 		return nil, err
 	}

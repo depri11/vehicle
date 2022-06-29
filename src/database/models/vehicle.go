@@ -14,7 +14,7 @@ type Vehicle struct {
 	Price       string        `json:"price" validate:"required"`
 	Likes       int           `json:"likes"`
 	Quantity    int           `json:"quantity" validate:"required"`
-	Images      *VehicleImage `json:"images"`
+	Images      []*VehicleImage `json:"images"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -24,7 +24,7 @@ type Vehicles []Vehicle
 type VehicleImage struct {
 	ID        int    `json:"id" gorm:"primariKey"`
 	VehicleID uint   `json:"vehicle_id" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Url       string `json:"Url"`
+	Url       string `json:"url"`
 	IsPrimary bool   `json:"is_primary"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
