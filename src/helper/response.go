@@ -28,7 +28,7 @@ func (r *Res) Send(w http.ResponseWriter) {
 		w.Write([]byte("Error When Encode respone"))
 	}
 }
-
+	
 func ResponseJSON(message string, code int, status string, data interface{}) *Res {
 	meta := Meta{
 		Message: message,

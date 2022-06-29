@@ -78,39 +78,94 @@ func TestSave(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-// var modelMockUpdate = models.Vehicle{
-// 	ID:   2,
-// 	Name: "Mobil",
-// }
+var modelMockUpdate = models.Vehicle{
+	ID:   2,
+	Name: "Mobil",
+}
 
-// func TestUpdate(t *testing.T) {
-// 	var repo = mocks.RepoMock{Mock: mock.Mock{}}
-// 	var service = service{&repo}
+func TestUpdate(t *testing.T) {
+	var repo = mocks.RepoMock{Mock: mock.Mock{}}
+	var service = service{&repo}
 
-// 	repo.Mock.On("Update", &modelMockUpdate).Return(&modelMockUpdate, nil)
-// 	data, err := service.Update(2, &modelMockUpdate)
+	repo.Mock.On("GetID", 2).Return(&modelMockUpdate, nil)
+	repo.Mock.On("Update", &modelMockUpdate).Return(&modelMockUpdate, nil)
 
-// 	modelMockAfterUpdate := models.Vehicle{
-// 		ID:   2,
-// 		Name: "Motor",
-// 	}
+	modelMockAfterUpdate := models.Vehicle{
+		Name: "Motor",
+	}
 
-// 	vehicles := data.Data.(*models.Vehicle)
-// 	assert.Equal(t, modelMockAfterUpdate, vehicles, "Expect Name = Motor")
-// 	assert.Nil(t, err)
-// }
+	data, err := service.Update(2, &modelMockAfterUpdate)
 
-// func TestPopular(t *testing.T) {
-// 	var repo = mocks.RepoMock{Mock: mock.Mock{}}
-// 	var service = service{&repo}
+	vehicles := data.Data.(*models.Vehicle)
+	assert.Equal(t, modelMockAfterUpdate.Name, vehicles.Name, "Expect Name = Motor")
+	assert.Nil(t, err)
+}
 
-// 	repo.Mock.On("GetID", 1).Return(&modelMock, nil)
-// 	data, err := service.FindByID(1)
+var PopularModelMocks = models.Vehicles{
+	models.Vehicle{
+		ID:    1,
+		Name:  "Mobil",
+		Likes: 5,
+	},
+	models.Vehicle{
+		ID:    2,
+		Name:  "Mobil",
+		Likes: 7,
+	},
+	models.Vehicle{
+		ID:    3,
+		Name:  "Mobil",
+		Likes: 8,
+	},
+}
 
-// 	vehicles := data.Data.(*models.Vehicle)
-// 	assert.Equal(t, 1, vehicles.ID, "Expect id = 1")
-// 	assert.Nil(t, err)
-// }
+func TestPopular(t *testing.T) {
+	var repo = mocks.RepoMock{Mock: mock.Mock{}}
+	var service = service{&repo}
+
+	popular := models.Vehicles{
+		models.Vehicle{
+			ID:    3,
+			Name:  "Mobil",
+			Likes: 8,
+		},
+		models.Vehicle{
+			ID:    2,
+			Name:  "Mobil",
+			Likes: 7,
+		},
+		models.Vehicle{
+			ID:    1,
+			Name:  "Mobil",
+			Likes: 5,
+		},
+	}
+
+	repo.Mock.On("Popular").Return(&popular, nil)
+	data, err := service.Popular()
+
+	expected := &models.Vehicles{
+		models.Vehicle{
+			ID:    3,
+			Name:  "Mobil",
+			Likes: 8,
+		},
+		models.Vehicle{
+			ID:    2,
+			Name:  "Mobil",
+			Likes: 7,
+		},
+		models.Vehicle{
+			ID:    1,
+			Name:  "Mobil",
+			Likes: 5,
+		},
+	}
+
+	vehicles := data.Data.(*models.Vehicles)
+	assert.Equal(t, expected, vehicles)
+	assert.Nil(t, err)
+}
 
 // func TestSort(t *testing.T) {
 // 	var repo = mocks.RepoMock{Mock: mock.Mock{}}

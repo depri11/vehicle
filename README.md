@@ -31,8 +31,6 @@ This is simple restful api crud with Golang
 
 ## Run Server
 
-#### type command below.
-
 ```
   go run main.go serve
 ```

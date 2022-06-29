@@ -24,7 +24,7 @@ type Vehicles []Vehicle
 type VehicleImage struct {
 	ID        int    `json:"id" gorm:"primariKey"`
 	VehicleID uint   `json:"vehicle_id" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Path      string `json:"path"`
+	Url       string `json:"Url"`
 	IsPrimary bool   `json:"is_primary"`
 	CreatedAt time.Time
 	UpdatedAt time.Time

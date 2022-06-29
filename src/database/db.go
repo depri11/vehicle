@@ -7,11 +7,16 @@ import (
 	"time"
 
 	"github.com/depri11/vehicle/src/database/models"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func SetupDB() (*gorm.DB, error) {
+	err := godotenv.Load()
+	if err != nil {
+		return nil, err
+	}
 
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USER")
