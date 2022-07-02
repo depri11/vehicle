@@ -15,7 +15,7 @@ type User struct {
 	Address   string    `json:"address"`
 	Nickname  string    `json:"nickname"`
 	Birthday  string    `json:"birthday"`
-	Role      string    `json:"role" validate:"required"`
+	Role      string    `json:"role"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
