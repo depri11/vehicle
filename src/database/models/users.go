@@ -10,11 +10,11 @@ type User struct {
 	Fullname  string    `json:"fullname" validate:"required"`
 	Email     string    `json:"email" validate:"email"`
 	Password  string    `json:"password,omitempty" validate:"required,min=6"`
-	Phone     string    `json:"phone" validate:"required,min=12"`
-	Gender    string    `json:"gender" validate:"required"`
-	Address   string    `json:"address" validate:"required"`
-	Nickname  string    `json:"nickname" validate:"required"`
-	Birthday  string    `json:"birthday" validate:"required"`
+	Phone     string    `json:"phone"`
+	Gender    string    `json:"gender"`
+	Address   string    `json:"address"`
+	Nickname  string    `json:"nickname"`
+	Birthday  string    `json:"birthday"`
 	Role      string    `json:"role" validate:"required"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
