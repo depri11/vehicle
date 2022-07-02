@@ -45,6 +45,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/newrelic/go-agent/v3 v3.16.1
+	github.com/rs/cors v1.8.2
 	github.com/spf13/cobra v1.4.0
 	github.com/stretchr/testify v1.7.2
 	gorm.io/driver/postgres v1.3.7

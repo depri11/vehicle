@@ -19,16 +19,13 @@ type Meta struct {
 }
 
 func (r *Res) Send(w http.ResponseWriter) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Accept, 0, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 
 	err := json.NewEncoder(w).Encode(r)
 	if err != nil {
 		w.Write([]byte("Error When Encode respone"))
 	}
 }
-	
+
 func ResponseJSON(message string, code int, status string, data interface{}) *Res {
 	meta := Meta{
 		Message: message,
