@@ -9,6 +9,7 @@ type VehicleRepository interface {
 	FindAll() (*models.Vehicles, error)
 	Save(vehicle *models.Vehicle) (*models.Vehicle, error)
 	GetID(ID int) (*models.Vehicle, error)
+	GetByType(search string) (*models.Vehicles, error)
 	Update(vehicle *models.Vehicle) (*models.Vehicle, error)
 	Delete(ID int) error
 	Popular() (*models.Vehicles, error)
@@ -19,6 +20,7 @@ type VehicleRepository interface {
 type VehicleService interface {
 	FindAll() (*helper.Res, error)
 	FindByID(id int) (*helper.Res, error)
+	FindByType(id string) (*helper.Res, error)
 	Create(user *models.Vehicle) (*helper.Res, error)
 	Update(id int, vehicle *models.Vehicle) (*helper.Res, error)
 	Delete(id int) (*helper.Res, error)

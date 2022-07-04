@@ -29,6 +29,7 @@ func NewRoute(r *mux.Router, db *gorm.DB) {
 	route.HandleFunc("/popular", controller.PopularVehicle).Methods("GET")
 	route.HandleFunc("/", middleware.Do(controller.Create, middleware.CheckAuth)).Methods("POST")
 	route.HandleFunc("/{id}", controller.GetVehicle).Methods("GET")
+	route.HandleFunc("/type/{type}", controller.GetVehiclesByType).Methods("GET")
 	route.HandleFunc("/{id}", middleware.Do(controller.UpdateVehicle, middleware.CheckAuth)).Methods("PUT")
 	route.HandleFunc("/{id}", middleware.Do(controller.DeleteVehicle, middleware.CheckAuth)).Methods("DELETE")
 

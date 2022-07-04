@@ -34,6 +34,16 @@ func (s *service) FindByID(id int) (*helper.Res, error) {
 	return response, nil
 }
 
+func (s *service) FindByType(types string) (*helper.Res, error) {
+	vehicle, err := s.repository.GetByType(types)
+	if err != nil {
+		return nil, err
+	}
+
+	response := helper.ResponseJSON("success", 200, "OK", vehicle)
+	return response, nil
+}
+
 func (s *service) Create(vehicle *models.Vehicle) (*helper.Res, error) {
 	data, err := s.repository.Save(vehicle)
 	if err != nil {

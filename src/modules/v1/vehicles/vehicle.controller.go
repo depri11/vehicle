@@ -52,6 +52,21 @@ func (c *controller) GetVehicle(w http.ResponseWriter, r *http.Request) {
 	result.Send(w)
 }
 
+func (c *controller) GetVehiclesByType(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	params := mux.Vars(r)["type"]
+	fmt.Println(params)
+
+	result, err := c.service.FindByType(params)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	result.Send(w)
+}
+
 func (c *controller) Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 

@@ -45,6 +45,16 @@ func (r *repository) GetID(ID int) (*models.Vehicle, error) {
 	return &vehicle, nil
 }
 
+func (r *repository) GetByType(search string) (*models.Vehicles, error) {
+	var vehicle *models.Vehicles
+	err := r.db.Where("LOWER(type) LIKE ?", "%"+search+"%").Preload("Images", "vehicle_images.is_primary = true").Find(&vehicle).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return vehicle, nil
+}
+
 func (r *repository) Update(vehicle *models.Vehicle) (*models.Vehicle, error) {
 	err := r.db.Save(&vehicle).Error
 	if err != nil {
