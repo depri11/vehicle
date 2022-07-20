@@ -1,6 +1,8 @@
-# Go, Gorilla/mux, Gorm, Postgres Restful API
-
-This is simple restful api crud with Golang
+<h1 align="center">Vehicle Rental Backend</h1>
+<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Go_Logo_Blue.svg/2560px-Go_Logo_Blue.svg.png" width="400px" alt="Golang.jpg" /></p>
+<p align="center">
+    <a href="https://golang.org/" target="blank">More about Golang</a>
+</p>
 
 ## 🖥️ Tech Stack
 
@@ -13,6 +15,9 @@ This is simple restful api crud with Golang
 **Deployed On:**
 
 ![heroku](https://img.shields.io/badge/heroku-100000?style=for-the-badge&logo=Heroku&logoColor=white&labelColor=3C8932&color=3C8932)&nbsp;
+
+## Description
+This backend application is used by the user to record incoming orders and manage Vehicle. In this application, user only can display vehicle and order vehicle rental, and admin can manage vehicle product. This application is built with Golang using the gorilla/mux package for routing. The databases used in this application are PostgreSQL.
 
 ## Install Package
 
