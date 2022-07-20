@@ -19,7 +19,7 @@ type Meta struct {
 }
 
 func (r *Res) Send(w http.ResponseWriter) {
-
+	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(r)
 	if err != nil {
 		w.Write([]byte("Error When Encode respone"))
