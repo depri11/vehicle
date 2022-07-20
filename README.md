@@ -70,3 +70,5 @@ This is simple restful api crud with Golang
 | Update by id              | PUT    | /history/2            |
 | Delete By Id              | DELETE | /history/1            |
 | Sort by id ex:desc or asc | GET    | /history/all?sort=asc |
+
+You can see all the end point [here](https://documenter.getpostman.com/view/17947721/UzQyqiZK)
