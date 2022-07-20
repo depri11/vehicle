@@ -19,7 +19,21 @@
 ## Description
 This backend application is used by the user to record incoming orders and manage Vehicle. In this application, user only can display vehicle and order vehicle rental, and admin can manage vehicle product. This application is built with Golang using the gorilla/mux package for routing. The databases used in this application are PostgreSQL.
 
+## Feature
+- Authentication users with JWT
+- CRUD User
+- CRUD Vehicle
+- CRUD History
+- Pagination Vehicle list
+- Sort Vehicle
+- Search Vehicle
+- CLI with Cobra
+
 ## Install Package
+
+```
+  go mod tidy
+```
 
 #### Gorilla/mux
 
@@ -77,3 +91,6 @@ This backend application is used by the user to record incoming orders and manag
 | Sort by id ex:desc or asc | GET    | /history/all?sort=asc |
 
 You can see all the end point [here](https://documenter.getpostman.com/view/17947721/UzQyqiZK)
+
+## FrontEnd Repository
+Backend API : Vehicle - Backend [here](https://github.com/depri11/fe_vehicle/)
